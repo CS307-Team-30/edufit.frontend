@@ -1,4 +1,5 @@
 import { ErrorMessage,Field, Form, Formik } from 'formik';
+import Link from 'next/link';
 import React from 'react';
 import * as Yup from 'yup';
 
@@ -82,9 +83,12 @@ const FormComponent: React.FC = () => {
                 </div>
               </div>
 
-              <div className='flex justify-center'>
+              <div className='flex justify-center space-x-4'>
                 <div className='border border-black bg-black hover:scale-105 transform duration-200 text-white px-6 py-2'>
-                  <button type="submit">Submit</button>
+                  <button type="submit">Login</button>
+                </div>
+                <div className='border border-black bg-black hover:scale-105 transform duration-200 text-white px-6 py-2'>
+                  <Link href="/register">Register</Link>
                 </div>
               </div>
 

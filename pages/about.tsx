@@ -1,13 +1,9 @@
-import React from 'react';
-
-import FormComponent from '@/app/components/FormComponent';
-
-const About = () => {
+// pages/about.tsx
+export default function About() {
   return (
-    <div>
-      <FormComponent />
+    <div className="p-4">
+      <h1 className="text-2xl font-bold">About Page</h1>
+      <p className=" mt-16 text-gray-600">This is the about page.</p>
     </div>
   );
-};
-
-export default About;
+}
