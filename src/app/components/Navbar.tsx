@@ -19,6 +19,8 @@ export default function Header() {
   const [nav, toggleNav] = useState(false)
   const { scrollYProgress } = useScroll()
 
+  const [value, setValue] = useState('')
+
   const [data, setData] = useState(defaultData);
 
   useEffect(() => {
@@ -34,6 +36,10 @@ export default function Header() {
 
     fetchData();
   }, []);
+
+  const handleChange = (value: any) => {
+    setValue(value)
+  }
 
   
 
@@ -51,10 +57,26 @@ export default function Header() {
             <BsFillGearFill />
           </motion.button>
         </div>
+        <div>
+
+        <label className="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" value="" className="sr-only peer" />
+          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+        </label>
+        <div className='flex flex-row'>
+
         <h1 className='font-secondary text-5xl flex flex-row justify-center'>
-          {data.main.title}
+          Edu
         </h1>
-        <div className='text-3xl hidden md:flex flex-row space-x-4 justify-end items-center'>
+        <h1 className='font-secondary text-pink-300 text-5xl flex flex-row justify-center'>
+          Fit
+        </h1>
+        </div>
+        </div>
+        <div>
+          <input type="text" value={value} onChange={handleChange} placeholder='Search something'/>
+        </div>
+        {/* <div className='text-3xl hidden md:flex flex-row space-x-4 justify-end items-center'>
           <UnstyledLink href={data.main.facebook} className='hover:text-gray-600'>
             <BsFacebook />
           </UnstyledLink>
@@ -68,7 +90,7 @@ export default function Header() {
             <BsTwitter/>
           </UnstyledLink>
 
-        </div>
+        </div> */}
         <motion.nav 
           initial={{translateX: -1000}}
           animate={nav ? {translateX: 0} : {translateX: -1000}}

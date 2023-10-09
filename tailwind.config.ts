@@ -24,6 +24,8 @@ export default {
           950: 'rgb(var(--tw-color-primary-950) / <alpha-value>)',
         },
         dark: '#222222',
+        secondary: "#f9a8d4"
+
       },
       keyframes: {
         flicker: {

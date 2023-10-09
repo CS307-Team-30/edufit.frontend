@@ -3,8 +3,9 @@
 import Head from 'next/head';
 import * as React from 'react';
 
+import '@/styles/colors.css';
+
 import FormComponent from '@/app/components/FormComponent';
-import ComponentsLayout from '@/app/components/layout';
 
 export default function HomePage() {
   return (
@@ -12,13 +13,11 @@ export default function HomePage() {
       <Head>
         <title>Edufit - Unfuck Your Life</title>
       </Head>
-      <ComponentsLayout>
-
-        <div>
+      <div className='min-h-screen  bg-pink-300'>
           <FormComponent />
-        </div>
 
-      </ComponentsLayout>
+      </div>
+
     </main>
   );
 }

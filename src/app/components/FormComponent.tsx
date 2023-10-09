@@ -45,7 +45,7 @@ const FormComponent: React.FC = () => {
 
 
   return (
-    <div className="bg-white text-black font-bebas lg:grid grid-cols-2"> 
+  <div className="bg-white mx-40 text-black font-bebas flex items-center justify-center h-screen"> 
       <div className='bg-amber-300'>
 
       </div>
@@ -83,11 +83,11 @@ const FormComponent: React.FC = () => {
                 </div>
               </div>
 
-              <div className='flex justify-center space-x-4'>
-                <div className='border border-black bg-black hover:scale-105 transform duration-200 text-white px-6 py-2'>
-                  <button type="submit">Login</button>
+              <div className='flex justify-center space-x-8'>
+                <div className='border  bg-pink-300 hover:scale-105 transform duration-200 text-white px-6 py-2'>
+                  <Link href="/homepage">Login</Link>
                 </div>
-                <div className='border border-black bg-black hover:scale-105 transform duration-200 text-white px-6 py-2'>
+                <div className='border  bg-pink-300 hover:scale-105 transform duration-200 text-white px-6 py-2'>
                   <Link href="/register">Register</Link>
                 </div>
               </div>
