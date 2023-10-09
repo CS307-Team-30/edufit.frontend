@@ -16,7 +16,7 @@ export default function ComponentsLayout({
   children: React.ReactNode;
 }) {
   return (
-      <div>
+      <div className='bg-pink-300 min-h-screen'>
         <Navbar />
         {children}
       </div>
