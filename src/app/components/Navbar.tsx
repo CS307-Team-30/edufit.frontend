@@ -13,6 +13,19 @@ const links = [
   { href: '/', label: 'Route 2' },
 ];
 
+import { FaSearch } from 'react-icons/fa';
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+function SearchComponent({ value, handleChange }: {value: string, handleChange: Function}) {
+    return (
+        <div className='flex justify-end text-2xl items-center'>
+            <FaSearch className='mr-2' /> {/* <-- This is your magnifying glass icon */}
+            <input className='px-4' type="text" value={value} onChange={(e) => handleChange(e.target.value)} placeholder='Search something'/>
+        </div>
+    );
+}
+
+
 
 export default function Header() {
 
@@ -49,10 +62,7 @@ export default function Header() {
       <div className='grid grid-cols-3'>
         <div className='flex flex-row justify-start items-center'>
 
-        <label className="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" value="" className="sr-only peer" />
-          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 dark:peer-focus:ring-pink-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-pink-600"></div>
-        </label>
+        <SearchComponent value={value} handleChange={handleChange} />
         </div>
         <div>
 
