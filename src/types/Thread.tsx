@@ -1,3 +1,4 @@
+import { Comment } from "@/types/Comment"
 import { Community } from "@/types/Community"
 import { User } from "@/types/User"
 

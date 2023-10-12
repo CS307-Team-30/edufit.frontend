@@ -1,3 +1,4 @@
+
 import { Thread } from "@/types/Thread";
 
 const ThreadComponent: React.FC<Thread> = ({ threadId, title, content, author, comments, community }) => {
