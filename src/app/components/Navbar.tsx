@@ -13,12 +13,13 @@ const links = [
   { href: '/', label: 'Route 2' },
 ];
 
+import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 function SearchComponent({ value, handleChange }: {value: string, handleChange: Function}) {
     return (
-        <div className='flex justify-end text-2xl items-center'>
+        <div className='flex justify-center mr-3 text-2xl items-center'>
             <FaSearch className='mr-2' /> {/* <-- This is your magnifying glass icon */}
             <input className='px-4' type="text" value={value} onChange={(e) => handleChange(e.target.value)} placeholder='Search something'/>
         </div>
@@ -62,7 +63,6 @@ export default function Header() {
       <div className='grid grid-cols-3'>
         <div className='flex flex-row justify-start items-center'>
 
-        <SearchComponent value={value} handleChange={handleChange} />
         </div>
         <div>
 
@@ -77,7 +77,8 @@ export default function Header() {
         </div>
         </div>
         <div className='flex justify-end text-2xl'>
-          <input className='px-4' type="text" value={value} onChange={(e) => handleChange(e.target.value)} placeholder='Search something'/>
+          <SearchComponent value={value} handleChange={handleChange} />
+          <Link href="/user">User Profile</Link>
         </div>
         <motion.nav 
           initial={{translateX: -1000}}
