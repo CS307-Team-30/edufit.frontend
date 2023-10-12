@@ -1,12 +1,9 @@
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
-interface ToggleProps {
-  onToggle?: (isToggled: boolean) => void;
-}
 
 
-const Toggle: React.FC<ToggleProps> = ({ onToggle }) => {
+const Toggle = () => {
   const [isToggled, setIsToggled] = useState(false);
   const router = useRouter()
 
@@ -24,7 +21,7 @@ const Toggle: React.FC<ToggleProps> = ({ onToggle }) => {
   return (
     <div 
       className={`relative inline-block w-12 max-h-[26px] rounded-xl align-middle select-none transition duration-200 ease-in ${isToggled ? 'bg-pink-500' : 'bg-pink-100'}`}
-      onClick={handleToggle}
+      onClick={() => handleToggle()}
       tabIndex={0}
     >
       <span 

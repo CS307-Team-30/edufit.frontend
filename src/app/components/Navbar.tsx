@@ -13,6 +13,7 @@ const links = [
   { href: '/', label: 'Route 2' },
 ];
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
 
@@ -66,14 +67,17 @@ export default function Header() {
         <Toggle />
         <div>
 
-        <div className='flex flex-row items-center justify-center'>
-
+        <div className='flex flex-row items-center justify-center space-x-4'>
+        <Image src="/images/logo.png" alt="logo" height={80} width={100}/>
+        <div className='flex flex-row'>
         <h1 className='font-secondary text-5xl flex flex-row justify-center'>
           Edu
         </h1>
         <h1 className='font-secondary text-pink-300 text-5xl flex flex-row justify-center'>
           Fit
         </h1>
+
+        </div>
         </div>
         </div>
         <div className='flex justify-end text-2xl'>
@@ -84,7 +88,7 @@ export default function Header() {
           initial={{translateX: -1000}}
           animate={nav ? {translateX: 0} : {translateX: -1000}}
           transition={{duration: 0.35, type: 'tween'}}
-          className='left-0 top-0 mt-[104px] absolute border w-full  md:w-96  h-screen bg-gray-100 z-30'>
+          className='left-0 top-0 mt-[104px] absolute border w-full  md:w-96  h-screen bg-pink-100 z-30'>
           <ul className='w-full flex flex-col items-center mt-10 space-y-6'>
             {links.map(({ href, label }) => (
               <li key={`${href}${label}`}>
