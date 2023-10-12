@@ -2,7 +2,7 @@ import "../src/styles/colors.css"
 import "../src/styles/globals.css"
 
 import ComponentsLayout from "@/app/components/layout";
-import NutritionInput from "@/app/components/NutritionInput";  
+import NutritionInput from "@/app/components/NutritionAdder";  
 
 // pages/about.tsx
 export default function NutritionPage() {
