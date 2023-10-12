@@ -16,6 +16,8 @@ const links = [
 import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
 
+import Toggle from '@/app/components/Toggle';
+
 // eslint-disable-next-line @typescript-eslint/ban-types
 function SearchComponent({ value, handleChange }: {value: string, handleChange: Function}) {
     return (
@@ -61,9 +63,7 @@ export default function Header() {
     <div className='sticky top-0 z-50 bg-white'>
     <motion.header className='sticky top-0 z-50 border min-h-[100px] md:px-32 px-10 pt-8 pb-6 shadow-md text-4xl'>
       <div className='grid grid-cols-3'>
-        <div className='flex flex-row justify-start items-center'>
-
-        </div>
+        <Toggle />
         <div>
 
         <div className='flex flex-row items-center justify-center'>
@@ -112,7 +112,7 @@ export default function Header() {
         </motion.nav>
       </div>
     </motion.header>
-    <motion.div className='h-2 w-full text-left left-0 top-0 z-40 bg-black' style={{scaleX: scrollYProgress}} />
+    <motion.div className='h-2 w-full text-left left-0 top-0 z-40 bg-pink-500' style={{scaleX: scrollYProgress}} />
     </div>
 
   );
