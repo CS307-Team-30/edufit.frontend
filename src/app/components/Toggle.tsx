@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 interface ToggleProps {
   onToggle?: (isToggled: boolean) => void;
@@ -11,23 +11,19 @@ const Toggle: React.FC<ToggleProps> = ({ onToggle }) => {
   const router = useRouter()
 
   const handleToggle = () => {
-    setIsToggled(!isToggled);
-    if (onToggle) {
-      onToggle(!isToggled);
+    if (isToggled){
+      setIsToggled(false)
+      router.push('homepage')
+    } else {
+      setIsToggled(true)
+      router.push('nutritionpage')
     }
   };
 
-  useEffect(() => {
-    if (isToggled) {
-      //
-    } else {
-      //
-    }
-  }, [isToggled, router])
 
   return (
     <div 
-      className={`relative inline-block w-12 max-h-[100px] rounded align-middle select-none transition duration-200 ease-in ${isToggled ? 'bg-pink-500' : 'bg-pink-100'}`}
+      className={`relative inline-block w-12 max-h-[26px] rounded-xl align-middle select-none transition duration-200 ease-in ${isToggled ? 'bg-pink-500' : 'bg-pink-100'}`}
       onClick={handleToggle}
       tabIndex={0}
     >
