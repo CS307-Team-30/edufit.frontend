@@ -20,7 +20,6 @@ const NutritionInput: React.FC = () => {
         e.preventDefault();
         console.log('Submitted Nutrition Data:', nutrition);
 
-        // Here, you might want to send this data to your API.
     };
 
     return (
