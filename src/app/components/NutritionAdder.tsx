@@ -23,7 +23,7 @@ const NutritionInput: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      style={{ display: 'flex', marginBottom: '20px' }}
+      style={{ display: 'flex', flexDirection: "column",  marginBottom: '20px' }}
     >
       <input
         type='number'
