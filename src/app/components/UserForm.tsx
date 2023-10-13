@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ErrorMessage,Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { ErrorMessage,Field, Form, Formik, FormikProps } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 
@@ -104,49 +104,37 @@ const UserForm: React.FC = () => {
               </div>
 
 
-              {/* Phone Number field */}
-              <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="phoneNumber">
-                  Phone Number
-                </label>
-                <Field
-                  type="text"
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  render={({ field, form }: FieldProps<any>) => (
-                    <input
-                      {...field}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      placeholder="Phone Number"
-                      value={formatPhoneNumber(field.value)}
-                      onChange={(e) => {
-                        const formattedValue = formatPhoneNumber(e.target.value);
-                        form.setFieldValue('phoneNumber', formattedValue);
-                      }}
-                    />
-                  )}
-                />
-                <ErrorMessage name="phoneNumber" component="div" className="text-red-500 text-sm mt-1" />
-              </div>
-
-              {/* Address field */}
+              {/* Password field */}
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="address">
-                  Address
+                  Password
                 </label>
                 <Field
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="address"
                   name="address"
-                  placeholder="Address"
-                  type="text"
+                  placeholder="New password"
+                  type="password"
+                />
+                <ErrorMessage name="address" component="div" className="text-red-500 text-sm mt-1" />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-bold mb-2" htmlFor="address">
+                  Confirm password
+                </label>
+                <Field
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="address"
+                  name="address"
+                  placeholder="New password"
+                  type="password"
                 />
                 <ErrorMessage name="address" component="div" className="text-red-500 text-sm mt-1" />
               </div>
               {/* Subject field */}
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="subject">
-                  Subject
+                  Visibility
                 </label>
                 <Field
                   as="select"
@@ -155,35 +143,12 @@ const UserForm: React.FC = () => {
                   name="subject"
                   placeholder="Subject"
                 >
-                  <option value="" disabled hidden>
-                    Select a subject
+                  <option value="Visibility" disabled hidden>
                   </option>
-                  <option value="Option 1">Option 1</option>
-                  <option value="Option 2">Option 2</option>
-                  <option value="Option 3">Option 3</option>
-                  <option value="Option 4">Option 4</option>
-                  <option value="Option 5">Option 5</option>
-                  <option value="Option 6">Option 6</option>
-                  <option value="Option 7">Option 7</option>
-                  <option value="Option 8">Option 8</option>
+                  <option value="Option 1">Public</option>
+                  <option value="Option 2">Anonymous</option>
                 </Field>
                 <ErrorMessage name="subject" component="div" className="text-red-500 text-sm mt-1" />
-              </div>
-
-              {/** Message field */}
-              <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="message">
-                  Message
-                </label>
-                <Field
-                  className="h-20 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="message"
-                  name="message"
-                  placeholder="Message"
-                  type="message"
-                  component="textarea"
-                />
-                <ErrorMessage name="message" component="div" className="text-red-500 text-sm mt-1" />
               </div>
 
     
@@ -192,7 +157,7 @@ const UserForm: React.FC = () => {
                 type="submit"
                 className=" bg-pink-300 bg-fg mt-4 hover:-translate-y-1 transition-transform duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
-                Submit
+                Save
               </button>
               <button
                 type="reset"
