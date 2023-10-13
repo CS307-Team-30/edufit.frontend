@@ -82,7 +82,9 @@ export default function Header() {
         </div>
         <div className='flex justify-end text-2xl'>
           <SearchComponent value={value} handleChange={handleChange} />
-          <Link href="/user">User profile</Link>
+          <Link className='rounded-full' href="/user">
+            <Image className='rounded-full h-[80px] w-[80px]' src="/images/user_icon.jpg" alt="user icon" width={80} height={80}/>
+          </Link>
         </div>
         <motion.nav 
           initial={{translateX: -1000}}
