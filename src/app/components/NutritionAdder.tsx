@@ -1,4 +1,4 @@
-import * as React from 'react';
+/*import * as React from 'react';
 
 import Nutrition from '@/app/components/Nutrition';
 
@@ -77,3 +77,4 @@ const NutritionInput: React.FC = () => {
 };
 
 export default NutritionInput;
+*/
