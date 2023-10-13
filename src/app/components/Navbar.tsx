@@ -24,7 +24,7 @@ function SearchComponent({ value, handleChange }: {value: string, handleChange: 
     return (
         <div className='flex justify-center mr-3 text-2xl items-center'>
             <FaSearch className='mr-2' /> {/* <-- This is your magnifying glass icon */}
-            <input className='px-4' type="text" value={value} onChange={(e) => handleChange(e.target.value)} placeholder='Search something'/>
+            <input className='px-4' type="text" value={value} onChange={(e) => handleChange(e.target.value)} placeholder='Search communities'/>
         </div>
     );
 }
@@ -67,8 +67,8 @@ export default function Header() {
         <Toggle />
         <div>
 
-        <div className='flex flex-row items-center justify-center space-x-4'>
-        <Image src="/images/logo.png" alt="logo" height={80} width={100}/>
+        <Link href="/homepage" className='flex flex-row items-center justify-center space-x-2'>
+        <Image src="/images/logo.png" alt="logo" height={40} width={100}/>
         <div className='flex flex-row'>
         <h1 className='font-secondary text-5xl flex flex-row justify-center'>
           Edu
@@ -78,11 +78,13 @@ export default function Header() {
         </h1>
 
         </div>
-        </div>
+        </Link>
         </div>
         <div className='flex justify-end text-2xl'>
           <SearchComponent value={value} handleChange={handleChange} />
-          <Link href="/user">User Profile</Link>
+          <Link className='rounded-full' href="/user">
+            <Image className='rounded-full h-[80px] w-[80px]' src="/images/user_icon.jpg" alt="user icon" width={80} height={80}/>
+          </Link>
         </div>
         <motion.nav 
           initial={{translateX: -1000}}
