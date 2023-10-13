@@ -62,7 +62,7 @@ export default function Homepage() {
           <div id="threads" className="w-full bg-pink-300 flex-col justify-center mr-32 relative">
             <div className="bg-white rounded-lg mt-8 mx-16 px-10 py-8">
               <div className="flex flex-row justify-between">
-                <h1>Arch Linux's Supremacy</h1>
+                <h1>Arch Linux Supremacy</h1>
                 <div className="flex flex-row space-x-4">
                   <h4>Author: Arnob</h4>
                   <h4>Community: CS307</h4>

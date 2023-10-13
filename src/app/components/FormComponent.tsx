@@ -1,4 +1,5 @@
 import { ErrorMessage,Field, Form, Formik } from 'formik';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import * as Yup from 'yup';
@@ -50,7 +51,10 @@ const FormComponent: React.FC = () => {
 
       </div>
       <div className="text-2xl flex flex-col pr-20 pl-20 my-20">
-        <div id="header" className='w-full flex flex-row justify-center text-5xl mb-20'>Want to sign up with us?</div>
+        <div className='w-full flex flex-col items-center justify-center'>
+          <Image src="/images/logo.png" alt="logo" height={100} width={100}/>
+          <h1 id="header" className='w-full text-black flex flex-row justify-center text-5xl mb-20'>Edu<span className='text-pink-300'>Fit</span></h1>
+        </div>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -84,10 +88,10 @@ const FormComponent: React.FC = () => {
               </div>
 
               <div className='flex justify-center space-x-8'>
-                <div className='border  bg-pink-300 hover:scale-105 transform duration-200 text-white px-6 py-2'>
+                <div className='border rounded-lg  bg-pink-300 hover:scale-105 transform duration-200 text-white px-6 py-2'>
                   <Link href="/homepage">Login</Link>
                 </div>
-                <div className='border  bg-pink-300 hover:scale-105 transform duration-200 text-white px-6 py-2'>
+                <div className='border rounded-lg  bg-pink-300 hover:scale-105 transform duration-200 text-white px-6 py-2'>
                   <Link href="/register">Register</Link>
                 </div>
               </div>
