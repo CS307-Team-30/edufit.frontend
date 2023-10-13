@@ -2,6 +2,7 @@ import "../src/styles/colors.css"
 import "../src/styles/globals.css"
 
 import ComponentsLayout from "@/app/components/layout";
+import PostBox from "@/app/components/PostBox";
 import Sidebar from "@/app/components/Sidebar";
 
 import { Community } from "@/types/Community";
@@ -58,7 +59,7 @@ export default function Homepage() {
       <ComponentsLayout>
         <div className="flex flex-row justify-between">
           <Sidebar />
-          <div id="threads" className="w-full bg-pink-300 flex-col justify-center mr-32">
+          <div id="threads" className="w-full bg-pink-300 flex-col justify-center mr-32 relative">
             <div className="bg-white rounded-lg mt-8 mx-16 px-10 py-8">
               <div className="flex flex-row justify-between">
                 <h1>Arch Linux's Supremacy</h1>
@@ -92,6 +93,8 @@ export default function Homepage() {
             </div>
 
           </div>
+          
+        <PostBox />
         </div>
       </ComponentsLayout>
 
