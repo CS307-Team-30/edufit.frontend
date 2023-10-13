@@ -1,18 +1,16 @@
-import "../src/styles/colors.css"
-import "../src/styles/globals.css"
+import '../src/styles/colors.css';
+import '../src/styles/globals.css';
 
-import ComponentsLayout from "@/app/components/layout";
+import ComponentsLayout from '@/app/components/layout';
+import Nutrition from '@/app/components/Nutrition';
 
 // pages/about.tsx
 export default function NutritionPage() {
   return (
-
-
-      <ComponentsLayout>
-        <div className="md:mx-40 pt-20 px-12 mt-12 bg-white min-h-[500px]">
-          Nutrition
-        </div>
-      </ComponentsLayout>
-
+    <ComponentsLayout>
+      <div className='mt-12 min-h-[500px] bg-white px-12 pt-20 md:mx-40'>
+        <Nutrition />
+      </div>
+    </ComponentsLayout>
   );
 }
