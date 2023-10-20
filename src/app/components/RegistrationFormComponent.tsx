@@ -1,19 +1,19 @@
+import axios from 'axios';
 import { ErrorMessage,Field, Form, Formik } from 'formik';
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 import * as Yup from 'yup';
 
 // Define the validation schema using Yup
 const validationSchema = Yup.object({
-  name: Yup.string().required('Name is required'),
+  username: Yup.string().required('Username is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
-  password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+  password: Yup.string().min(4, 'Password must be at least 4 characters').required('Password is required'),
 });
 
 
 interface FormValues {
-  name: string;
+  username: string;
   email: string;
   password: string;
 }
@@ -34,15 +34,32 @@ const ErrorMessageComponent = ({children}: ErrorMessageComponentProps) => {
 
 const RegistrationFormComponent: React.FC = () => {
   const initialValues: FormValues = {
-    name: '',
+    username: '',
     email: '',
     password: '',
   };
 
-  const handleSubmit = (values: FormValues) => {
-    // Handle form submission
-    console.log(values);
+
+  const handleSubmit = async (values: FormValues) => {
+    console.log("we entered handlesubmit")
+    try {
+
+      console.log("we entered handlesubmit")
+      // Construct the URL with query parameters
+      const queryParams = new URLSearchParams(values).toString();
+      console.log(queryParams);
+      const url = `http://localhost:4000/create-user?${queryParams}`;
+      // Make the POST request
+      const response = await axios.post(url);
+      
+      // Log the response
+      console.log(response.data);
+    } catch (error) {
+      console.error("There was an error submitting the form", error);
+    }
   };
+
+
 
 
   return (
@@ -63,10 +80,10 @@ const RegistrationFormComponent: React.FC = () => {
           <Form>
             <div className='text-3xl  grid grid-rows-4 gap-12'>
               <div className='grid grid-cols-2'>
-                <label htmlFor="name">Name:</label>
+                <label htmlFor="username">Username:</label>
                 <div className="relative font-primary">
-                  <ErrorMessage name="name" component={ErrorMessageComponent} />
-                  <Field type="text" id="name" name="name" />
+                  <ErrorMessage name="username" component={ErrorMessageComponent} />
+                  <Field type="text" id="username" name="username" />
                 </div>
               </div>
 
@@ -87,21 +104,10 @@ const RegistrationFormComponent: React.FC = () => {
                 </div>
               </div>
 
-              <div className='grid grid-cols-2'>
-                <label htmlFor="password">Confirm password:</label>
-                <div className='relative font-primary'>
-                  <ErrorMessage name="password" component={ErrorMessageComponent} />
-                  <Field type="password" id="password" name="password" />
-
-                </div>
-              </div>
 
               <div className='flex justify-center space-x-8'>
                 <div className='border rounded-lg  bg-pink-300 hover:scale-105 transform duration-200 text-white px-6 py-2'>
-                  <Link href="/homepage">Login</Link>
-                </div>
-                <div className='border rounded-lg  bg-pink-300 hover:scale-105 transform duration-200 text-white px-6 py-2'>
-                  <Link href="/register">Register</Link>
+                  <button type="submit">Register</button>
                 </div>
               </div>
 
