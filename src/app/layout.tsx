@@ -5,7 +5,6 @@ import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
 
-import { UserProvider } from '@/app/contexts/UserContext';
 import { siteConfig } from '@/constant/config';
 
 // !STARTERCONF Change these default meta
@@ -55,10 +54,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
-      <body>
-        <UserProvider>{children}</UserProvider>
-      </body>
-    </html>
+
+      <html>
+        <body>
+          {children}
+        </body>
+      </html>
   );
 }

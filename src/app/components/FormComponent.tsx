@@ -1,9 +1,15 @@
 import axios from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { jwtDecode } from 'jwt-decode';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import * as Yup from 'yup';
+
+import { useGlobalStore } from '@/app/stores/UserStore';
+
+import { User } from '@/types/User';
 
 // Define the validation schema using Yup
 const validationSchema = Yup.object({
@@ -33,23 +39,32 @@ const FormComponent: React.FC = () => {
     username: '',
     password: '',
   };
-  const handleSubmit = async (values: FormValues) => {
-    try {
-      // Construct the URL with query parameters
-      const queryParams = new URLSearchParams(values).toString();
-      const url = `http://localhost:4000/login?${queryParams}`;
-      console.log(url)
 
-      // Make the POST request
-      const response = await axios.post(url);
-      
-      // Log the response
-      console.log(response.data);
+  const router = useRouter()
+  const user = useGlobalStore((state) => state.user)
+  const updateUser = useGlobalStore((state) => state.updateUser)
+  
+
+  const handleSubmit = async (values: FormValues) => {
+    // console.log(values)
+    try {
+      const response = await axios.post('http://localhost:8000/login', values);
+
+      // console.log(response.data.token)
+      const responseToken: string = response.data.token
+      const decodedToken: User = jwtDecode(responseToken)
+
+      updateUser({...user, ...decodedToken})
+ 
+      router.push('/homepage');
     } catch (error) {
-      console.error("There was an error submitting the form", error);
+      if (axios.isAxiosError(error)) {
+        console.error('Authentication failed:', error.response?.data);
+      } else {
+        console.error('An unexpected error occurred:', error);
+      }
     }
   };
-
 
   return (
     <div className="bg-white mx-40 text-black font-bebas flex items-center justify-center h-screen">

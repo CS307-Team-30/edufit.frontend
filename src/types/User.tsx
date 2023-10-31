@@ -42,5 +42,5 @@ export const initialUserState: User = {
   notification: [],
   moderator: false,
   authenticationToken: '',
-  exp: 0,
+  exp: -1,
 };

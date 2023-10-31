@@ -1,9 +1,9 @@
+
 import * as React from 'react';
 
 import '@/styles/colors.css';
 
 import Navbar from '@/app/components/Navbar';
-import { UserContext } from '@/app/contexts/UserContext';
 
 
 // export const metadata: Metadata = {
@@ -17,14 +17,12 @@ export default function ComponentsLayout({
   children: React.ReactNode;
 }) {
 
-  const {state} = React.useContext(UserContext)
-
   return (
+      <div className='bg-pink-300 min-h-screen'>
+        <Navbar />
+        {children}
+      </div>
 
-  <div className='bg-pink-300 min-h-screen'>
-    <Navbar />
-    {children}
-  </div>
 
   )
   

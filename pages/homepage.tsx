@@ -1,60 +1,75 @@
+import { useEffect, useState } from "react";
+
 import "../src/styles/colors.css"
 import "../src/styles/globals.css"
 
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import ComponentsLayout from "@/app/components/layout";
 import PostBox from "@/app/components/PostBox";
 import Sidebar from "@/app/components/Sidebar";
+import { useGlobalStore } from "@/app/stores/UserStore";
 
-import { Community } from "@/types/Community";
-import { Thread } from "@/types/Thread";
 
 
 // Dummy Communities
-const communities: Community[] = [
-  { communityId: 1, name: "Programming" },
-  { communityId: 2, name: "Gaming" },
-  { communityId: 3, name: "Travel" },
-];
+// const communities: Community[] = [
+//   { communityId: 1, name: "Programming" },
+//   { communityId: 2, name: "Gaming" },
+//   { communityId: 3, name: "Travel" },
+// ];
 
-// Dummy Comments
-const comments: Comment[] = [
-  { commentId: 1, content: "Great post!", author: 1, timestamp: new Date() },
-  { commentId: 2, content: "I agree!", author: 2, timestamp: new Date() },
-  { commentId: 3, content: "Interesting discussion.", author: 3, timestamp: new Date() },
-];
+// // Dummy Comments
+// const comments: Comment[] = [
+//   { commentId: 1, content: "Great post!", author: 1, timestamp: new Date() },
+//   { commentId: 2, content: "I agree!", author: 2, timestamp: new Date() },
+//   { commentId: 3, content: "Interesting discussion.", author: 3, timestamp: new Date() },
+// ];
 
-// Dummy Threads
-const threads: Thread[] = [
+// // Dummy Threads
+// const threads: Thread[] = [
+//   {
+//     threadId: 1,
+//     title: "Introduction to JavaScript",
+//     content: "This is a thread about JavaScript.",
+//     author: { userId: 1, username: "john_doe" },
+//     comments: [comments[0], comments[1]],
+//     community: communities[0],
+//   },
+//   {
+//     threadId: 2,
+//     title: "Best Games of 2023",
+//     content: "Let's discuss the best games released in 2023.",
+//     author: { userId: 2, username: "gamer123" },
+//     comments: [comments[2]],
+//     community: communities[1],
+//   },
+//   {
+//     threadId: 3,
+//     title: "Travel Tips",
+//     content: "Share your travel tips and experiences here.",
+//     author: { userId: 3, username: "traveler77" },
+//     comments: [],
+//     community: communities[2],
+//   },
+// ];
+
+function HomepageContext() {
+
+
+
+  const [visbility, setVisibility] = useState(false)
+
+  const user = useGlobalStore((state) => state.user) 
+
+
+  useEffect(() => {
+    if (user.exp != -1) {
+      setVisibility(true)
+    }
+  }, [user])
+
+  if (visbility)
   {
-    threadId: 1,
-    title: "Introduction to JavaScript",
-    content: "This is a thread about JavaScript.",
-    author: { userId: 1, username: "john_doe" },
-    comments: [comments[0], comments[1]],
-    community: communities[0],
-  },
-  {
-    threadId: 2,
-    title: "Best Games of 2023",
-    content: "Let's discuss the best games released in 2023.",
-    author: { userId: 2, username: "gamer123" },
-    comments: [comments[2]],
-    community: communities[1],
-  },
-  {
-    threadId: 3,
-    title: "Travel Tips",
-    content: "Share your travel tips and experiences here.",
-    author: { userId: 3, username: "traveler77" },
-    comments: [],
-    community: communities[2],
-  },
-];
-
-
-export default function Homepage() {
-
-
   return (
 
 
@@ -101,4 +116,20 @@ export default function Homepage() {
       </ComponentsLayout>
 
   );
+  } else {
+    return (
+      <div className="w-full h-full text-black">
+        Loading...
+      </div>
+    )
+  }
+
+}
+
+
+export default function Homepage() {
+  return (
+      <HomepageContext/>
+  )
+
 }

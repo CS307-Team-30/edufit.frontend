@@ -3,12 +3,12 @@ import { ErrorMessage,Field, Form, Formik } from 'formik';
 import { jwtDecode } from 'jwt-decode'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useContext } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 
-import { UserContext } from '@/app/contexts/UserContext';
+import { useGlobalStore } from '@/app/stores/UserStore';
 
-import { User } from '@/types/User';
+import {User } from '@/types/User';
 
 // Define the validation schema using Yup
 const validationSchema = Yup.object({
@@ -38,6 +38,8 @@ const ErrorMessageComponent = ({children}: ErrorMessageComponentProps) => {
   )
 }
 
+
+
 const RegistrationFormComponent: React.FC = () => {
   const initialValues: FormValues = {
     username: '',
@@ -46,11 +48,8 @@ const RegistrationFormComponent: React.FC = () => {
   };
 
   const router = useRouter()
-  const { dispatch } = useContext(UserContext);
-
-  const setUser = (user: User) => {
-    dispatch({ type: 'SET_USER', payload: user });
-  };
+  const user = useGlobalStore((state) => state.user)
+  const updateUser = useGlobalStore((state) => state.updateUser)
   
 
   const handleSubmit = async (values: FormValues) => {
@@ -60,10 +59,10 @@ const RegistrationFormComponent: React.FC = () => {
 
       // console.log(response.data.token)
       const responseToken: string = response.data.token
-      const x: User = jwtDecode(responseToken)
-      setUser(x)
- 
+      const decodedToken: User = jwtDecode(responseToken)
 
+      updateUser({...user, ...decodedToken})
+ 
       router.push('/homepage');
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -139,4 +138,5 @@ const RegistrationFormComponent: React.FC = () => {
 };
 
 
-export default RegistrationFormComponent;
+
+export default RegistrationFormComponent

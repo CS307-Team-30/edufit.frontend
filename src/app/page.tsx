@@ -13,6 +13,7 @@ export default function HomePage() {
       <Head>
         <title>Edufit - Unfuck Your Life</title>
       </Head>
+      
       <div className='min-h-screen  bg-pink-300'>
           <FormComponent />
 
