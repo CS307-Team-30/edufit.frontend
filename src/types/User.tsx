@@ -1,6 +1,7 @@
 import { Community } from '@/types/Community';
 import { Meal } from '@/types/Meal';
 import { Metrics } from '@/types/Metrics';
+import { Notification } from '@/types/Notification';
 import { NutritionGoals } from '@/types/NutritionGoals';
 import { PrivacySettings } from '@/types/PrivacySettings';
 import { WorkoutPlan } from '@/types/WorkoutPlan';

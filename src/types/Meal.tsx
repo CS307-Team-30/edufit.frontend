@@ -1,6 +1,9 @@
 export interface Meal {
-  mealId: number
+  mealId: string
   name: string
-  nutrients: Map<string, number>
+  protein: number
+  carbs: number
+  fats: number
   timestamp: Date
+  userId: string
 }
