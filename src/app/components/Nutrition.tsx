@@ -156,23 +156,7 @@ const Nutrition: React.FC = () => {
       <div>
         <HydrationCard />
       </div>
-
-      {/* Form for Nutrition Inputs */}
-      <div>
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginBottom: '20px',
-          }}
-        >
-          {/* Inputs for Nutrition */}
-          {/* ... (existing code for nutrition inputs) */}
-        </form>
-      </div>
     </div>
   );
 };
-
 export default Nutrition;
