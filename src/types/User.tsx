@@ -7,6 +7,7 @@ import { PrivacySettings } from '@/types/PrivacySettings';
 import { WorkoutPlan } from '@/types/WorkoutPlan';
 
 export interface User {
+  name: ReactNode;
   id: string;
   username: string;
   email: string;
