@@ -57,12 +57,13 @@ function HomepageContext() {
 
 
 
-  const [visbility, setVisibility] = useState(false)
 
   const user = useGlobalStore((state) => state.user) 
 
+  const [visbility, setVisibility] = useState(user.exp == -1 ? false : true)
 
   useEffect(() => {
+    console.log(user)
     if (user.exp != -1) {
       setVisibility(true)
     }

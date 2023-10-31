@@ -3,7 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { jwtDecode } from 'jwt-decode';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import * as Yup from 'yup';
 
@@ -40,10 +40,10 @@ const FormComponent: React.FC = () => {
     password: '',
   };
 
-  const router = useRouter()
+
   const user = useGlobalStore((state) => state.user)
   const updateUser = useGlobalStore((state) => state.updateUser)
-  
+  const router = useRouter();
 
   const handleSubmit = async (values: FormValues) => {
     // console.log(values)
@@ -53,10 +53,9 @@ const FormComponent: React.FC = () => {
       // console.log(response.data.token)
       const responseToken: string = response.data.token
       const decodedToken: User = jwtDecode(responseToken)
-
+      console.log(decodedToken)
       updateUser({...user, ...decodedToken})
- 
-      router.push('/homepage');
+      router.push("/homepage")
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error('Authentication failed:', error.response?.data);
