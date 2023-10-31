@@ -3,8 +3,10 @@ import { ErrorMessage,Field, Form, Formik } from 'formik';
 import { jwtDecode } from 'jwt-decode'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useContext } from 'react';
 import * as Yup from 'yup';
+
+import { UserContext } from '@/app/contexts/UserContext';
 
 import { User } from '@/types/User';
 
@@ -44,18 +46,12 @@ const RegistrationFormComponent: React.FC = () => {
   };
 
   const router = useRouter()
+  const { dispatch } = useContext(UserContext);
+
+  const setUser = (user: User) => {
+    dispatch({ type: 'SET_USER', payload: user });
+  };
   
-  // const userState = useSelector((state: RootState) => state.user);
-  // const dispatch = useDispatch();
-
-  // const setUser = (newUser: User) => {
-  //   dispatch({ type: 'SET_USER', payload: newUser });
-  // };
-
-  // const xuser = {
-  //   // ...initialUserState
-  // }
-
 
   const handleSubmit = async (values: FormValues) => {
     // console.log(values)
@@ -65,22 +61,8 @@ const RegistrationFormComponent: React.FC = () => {
       // console.log(response.data.token)
       const responseToken: string = response.data.token
       const x: User = jwtDecode(responseToken)
-      // // console.log(x)
-      // xuser.id = x.id;
-      // xuser.username = x.username
-      // xuser.email = x.email
-      // xuser.exp = x.exp
-  
+      setUser(x)
  
-      // Assuming the response contains the user data
-      // setUser(xuser);
-      // const setUserPayload = {
-      //   type: 'SET_USER',
-      //   payload: userState 
-      // };
-
-      // dispatch(setUserPayload)
-      // // console.log(xuser);
 
       router.push('/homepage');
     } catch (error) {
