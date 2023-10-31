@@ -5,6 +5,7 @@ import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
 
+import { UserProvider } from '@/app/contexts/UserContext';
 import { siteConfig } from '@/constant/config';
 
 // !STARTERCONF Change these default meta
@@ -56,7 +57,7 @@ export default function RootLayout({
   return (
     <html>
       <body>
-          {children}
+        <UserProvider>{children}</UserProvider>
       </body>
     </html>
   );
