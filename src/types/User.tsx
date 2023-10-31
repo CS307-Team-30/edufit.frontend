@@ -6,6 +6,7 @@ import { PrivacySettings } from "@/types/PrivacySettings"
 import { WorkoutPlan } from "@/types/WorkoutPlan"
 
 export interface User {
+  id: string
   username: string
   email: string
   meals: Array<Meal>

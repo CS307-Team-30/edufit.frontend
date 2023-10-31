@@ -1,8 +1,12 @@
 import axios from 'axios';
 import { ErrorMessage,Field, Form, Formik } from 'formik';
+import { jwtDecode } from 'jwt-decode'
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React from 'react';
 import * as Yup from 'yup';
+
+import { User } from '@/types/User';
 
 // Define the validation schema using Yup
 const validationSchema = Yup.object({
@@ -39,26 +43,54 @@ const RegistrationFormComponent: React.FC = () => {
     password: '',
   };
 
+  const router = useRouter()
+  
+  // const userState = useSelector((state: RootState) => state.user);
+  // const dispatch = useDispatch();
+
+  // const setUser = (newUser: User) => {
+  //   dispatch({ type: 'SET_USER', payload: newUser });
+  // };
+
+  // const xuser = {
+  //   // ...initialUserState
+  // }
+
 
   const handleSubmit = async (values: FormValues) => {
-    console.log("we entered handlesubmit")
+    // console.log(values)
     try {
+      const response = await axios.post('http://localhost:8000/register', values);
 
-      console.log("we entered handlesubmit")
-      // Construct the URL with query parameters
-      const queryParams = new URLSearchParams(values).toString();
-      console.log(queryParams);
-      const url = `http://localhost:4000/create-user?${queryParams}`;
-      // Make the POST request
-      const response = await axios.post(url);
-      
-      // Log the response
-      console.log(response.data);
+      // console.log(response.data.token)
+      const responseToken: string = response.data.token
+      const x: User = jwtDecode(responseToken)
+      // // console.log(x)
+      // xuser.id = x.id;
+      // xuser.username = x.username
+      // xuser.email = x.email
+      // xuser.exp = x.exp
+  
+ 
+      // Assuming the response contains the user data
+      // setUser(xuser);
+      // const setUserPayload = {
+      //   type: 'SET_USER',
+      //   payload: userState 
+      // };
+
+      // dispatch(setUserPayload)
+      // // console.log(xuser);
+
+      router.push('/homepage');
     } catch (error) {
-      console.error("There was an error submitting the form", error);
+      if (axios.isAxiosError(error)) {
+        console.error('Registration failed:', error.response?.data);
+      } else {
+        console.error('An unexpected error occurred:', error);
+      }
     }
   };
-
 
 
 

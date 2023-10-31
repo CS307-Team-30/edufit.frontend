@@ -1,12 +1,9 @@
 import { motion, useScroll } from 'framer-motion';
 import * as React from 'react';
-import {useEffect, useState } from 'react';
-import {BsFacebook, BsInstagram, BsTwitter} from 'react-icons/bs'
-import { ImSoundcloud } from 'react-icons/im';
+import { useState } from 'react';
 
 import UnstyledLink from '@/components/links/UnstyledLink';
 
-import defaultData from '@/types/YamlData';
 
 const links = [
   { href: '/', label: 'Route 1' },
@@ -18,6 +15,8 @@ import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
 
 import Toggle from '@/app/components/Toggle';
+
+// import { RootState } from '@/types/types';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 function SearchComponent({ value, handleChange }: {value: string, handleChange: Function}) {
@@ -38,27 +37,17 @@ export default function Header() {
 
   const [value, setValue] = useState('')
 
-  const [data, setData] = useState(defaultData);
+  // const user: User = useSelector((state: RootState) => state.user);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/siteData');
-        const parsedData = await response.json();
-        setData(parsedData);
-      } catch (error) {
-        console.error('Error fetching YAML data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const handleChange = (value: any) => {
     setValue(value)
   }
 
-  
+  // React.useEffect(() => {
+  //   console.log(user)
+
+  // }, [user])
 
   return (
     <div className='sticky top-0 z-50 bg-white'>
@@ -76,7 +65,7 @@ export default function Header() {
         <h1 className='font-secondary text-pink-300 text-5xl flex flex-row justify-center'>
           Fit
         </h1>
-
+        {/* <h2>{user.username}</h2> */}
         </div>
         </Link>
         </div>
@@ -84,6 +73,7 @@ export default function Header() {
           <SearchComponent value={value} handleChange={handleChange} />
           <Link className='rounded-full' href="/user">
             <Image className='rounded-full h-[80px] w-[80px]' src="/images/user_icon.jpg" alt="user icon" width={80} height={80}/>
+
           </Link>
         </div>
         <motion.nav 
@@ -100,21 +90,7 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          <div className='text-3xl flex md:hidden flex-row space-x-4 justify-center mt-12 items-center'>
-            <UnstyledLink href={data.main.facebook} className='hover:text-gray-600'>
-              <BsFacebook />
-            </UnstyledLink>
-            <UnstyledLink href={data.main.instagram} className='hover:text-gray-600'>
-              <BsInstagram />
-            </UnstyledLink>
-            <UnstyledLink href={data.main.soundcloud} className='hover:text-gray-600'>
-              <ImSoundcloud />
-            </UnstyledLink>
-            <UnstyledLink href={data.main.twitter} className='hover:text-gray-600'>
-              <BsTwitter/>
-            </UnstyledLink>
 
-          </div>
         </motion.nav>
       </div>
     </motion.header>
