@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 type Food = {
   name: string;
   calories: string;
+  protein: string;
+  fat: string;
+  carbs: string;
   quantity: string;
   mealType: string;
 };
@@ -19,7 +22,7 @@ const buttonStyle = {
 
 const MealLogger: React.FC = () => {
   const [foods, setFoods] = useState<Food[]>([]);
-  const [newFood, setNewFood] = useState<Food>({ name: '', calories: '', quantity: '', mealType: 'Breakfast' });
+  const [newFood, setNewFood] = useState<Food>({ name: '', calories: '', protein: '', fat: '', carbs: '', quantity: '', mealType: 'Breakfast' });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -32,7 +35,7 @@ const MealLogger: React.FC = () => {
 
   const addFoodToMeal = () => {
     setFoods(prevFoods => [...prevFoods, newFood]);
-    setNewFood({ name: '', calories: '', quantity: '', mealType: 'Breakfast' });
+    setNewFood({ name: '', calories: '', protein: '', fat: '', carbs: '', quantity: '', mealType: 'Breakfast' });
   };
 
   return (
@@ -46,6 +49,7 @@ const MealLogger: React.FC = () => {
           name="name"
           onChange={handleChange}
           placeholder="Food name"
+          className="bg-pink-100 border border-gray-300 rounded-md p-2"
         />
         <input
           type="number"
@@ -53,6 +57,31 @@ const MealLogger: React.FC = () => {
           name="calories"
           onChange={handleChange}
           placeholder="Calories"
+          className="bg-pink-100 border border-gray-300 rounded-md p-2"
+        />
+        <input
+          type="number"
+          value={newFood.protein}
+          name="protein"
+          onChange={handleChange}
+          placeholder="Protein (g)"
+          className="bg-pink-100 border border-gray-300 rounded-md p-2"
+        />
+        <input
+          type="number"
+          value={newFood.fat}
+          name="fat"
+          onChange={handleChange}
+          placeholder="Fats (g)"
+          className="bg-pink-100 border border-gray-300 rounded-md p-2"
+        />
+        <input
+          type="number"
+          value={newFood.carbs}
+          name="carbs"
+          onChange={handleChange}
+          placeholder="Carbs (g)"
+          className="bg-pink-100 border border-gray-300 rounded-md p-2"
         />
         <input
           type="number"
@@ -60,11 +89,13 @@ const MealLogger: React.FC = () => {
           name="quantity"
           onChange={handleChange}
           placeholder="Quantity (oz.)"
+          className="bg-pink-100 border border-gray-300 rounded-md p-2"
         />
         <select
           name="mealType"
           value={newFood.mealType}
           onChange={handleChange}
+          className="bg-pink-100 border border-gray-300 rounded-md p-2"
         >
           <option value="Breakfast">Breakfast</option>
           <option value="Lunch">Lunch</option>
@@ -81,7 +112,7 @@ const MealLogger: React.FC = () => {
         <ul>
           {foods.map((food, index) => (
             <li key={index}>
-              {food.name} - Calories: {food.calories} - Quantity: {food.quantity}oz. - Meal Type: {food.mealType}
+              {food.name} - Calories: {food.calories} - Protein: {food.protein}g - Fats: {food.fat}g - Carbs: {food.carbs}g - Quantity: {food.quantity}oz. - Meal Type: {food.mealType}
             </li>
           ))}
         </ul>
