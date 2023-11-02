@@ -13,9 +13,6 @@ export default function NutritionPage() {
   return (
     <ComponentsLayout>
       <div className='mt-12 min-h-[500px] bg-white px-12 pt-20 md:mx-40'>
-        <Nutrition />
-      </div>
-      <div className='mt-12 min-h-[500px] bg-white px-12 pt-20 md:mx-40'>
         <Meals />
       </div>
       <div className='mt-12 min-h-[500px] bg-white px-12 pt-20 md:mx-40'>
