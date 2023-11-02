@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
 
 import "../src/styles/colors.css"
 import "../src/styles/globals.css"
@@ -9,68 +9,30 @@ import PostBox from "@/app/components/PostBox";
 import Sidebar from "@/app/components/Sidebar";
 import { useGlobalStore } from "@/app/stores/UserStore";
 
+import { Community } from "@/types/Community";
 
+type HomePageProps = {
+  communities: Array<Community>
+}
 
-// Dummy Communities
-// const communities: Community[] = [
-//   { communityId: 1, name: "Programming" },
-//   { communityId: 2, name: "Gaming" },
-//   { communityId: 3, name: "Travel" },
-// ];
+export default function Homepage({ communities }: HomePageProps) {
 
-// // Dummy Comments
-// const comments: Comment[] = [
-//   { commentId: 1, content: "Great post!", author: 1, timestamp: new Date() },
-//   { commentId: 2, content: "I agree!", author: 2, timestamp: new Date() },
-//   { commentId: 3, content: "Interesting discussion.", author: 3, timestamp: new Date() },
-// ];
-
-// // Dummy Threads
-// const threads: Thread[] = [
-//   {
-//     threadId: 1,
-//     title: "Introduction to JavaScript",
-//     content: "This is a thread about JavaScript.",
-//     author: { userId: 1, username: "john_doe" },
-//     comments: [comments[0], comments[1]],
-//     community: communities[0],
-//   },
-//   {
-//     threadId: 2,
-//     title: "Best Games of 2023",
-//     content: "Let's discuss the best games released in 2023.",
-//     author: { userId: 2, username: "gamer123" },
-//     comments: [comments[2]],
-//     community: communities[1],
-//   },
-//   {
-//     threadId: 3,
-//     title: "Travel Tips",
-//     content: "Share your travel tips and experiences here.",
-//     author: { userId: 3, username: "traveler77" },
-//     comments: [],
-//     community: communities[2],
-//   },
-// ];
-
-function HomepageContext() {
-
-
+  
 
 
   const user = useGlobalStore((state) => state.user) 
 
-  const [visbility, setVisibility] = useState(user.exp == -1 ? false : true)
+  const updateCommunities = useGlobalStore(state => state.update)
 
-  useEffect(() => {
-    console.log(user)
-    if (user.exp != -1) {
-      setVisibility(true)
-    }
-  }, [user])
+  updateCommunities(communities)
 
-  if (visbility)
+
+  
+
+
+  if (user.exp != -1)
   {
+
   return (
 
 
@@ -128,9 +90,17 @@ function HomepageContext() {
 }
 
 
-export default function Homepage() {
-  return (
-      <HomepageContext/>
-  )
 
+
+ 
+export async function getStaticProps() {
+  // Call an external API endpoint to get posts.
+  // You can use any data fetching library
+  const resData = await axios.get("http://127.0.0.1:8000/all-communities")
+  const communities: Array<Community> = resData.data
+  return {
+    props: {
+      communities
+    },
+  }
 }

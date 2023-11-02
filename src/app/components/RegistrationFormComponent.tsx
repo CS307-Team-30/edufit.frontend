@@ -61,7 +61,7 @@ const RegistrationFormComponent: React.FC = () => {
       const responseToken: string = response.data.token
       const decodedToken: User = jwtDecode(responseToken)
 
-      updateUser({...user, ...decodedToken})
+      updateUser({...user, ...decodedToken, authenticationToken: responseToken})
  
       router.push('/homepage');
     } catch (error) {
