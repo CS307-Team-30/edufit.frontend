@@ -17,7 +17,7 @@ const buttonStyle = {
   border: 'none',
   borderRadius: '4px',
   cursor: 'pointer',
-  marginLeft: '20px',
+  marginLeft: '5px',
 };
 
 const MealLogger: React.FC = () => {
@@ -36,6 +36,29 @@ const MealLogger: React.FC = () => {
   const addFoodToMeal = () => {
     setFoods(prevFoods => [...prevFoods, newFood]);
     setNewFood({ name: '', calories: '', protein: '', fat: '', carbs: '', quantity: '', mealType: 'Breakfast' });
+  };
+
+  const [editIndex, setEditIndex] = useState<number>(-1);
+
+  const handleEdit = (index: number) => {
+    setNewFood(foods[index]);
+    setEditIndex(index);
+  };
+
+  const handleSave = () => {
+    const updatedFoods = [...foods];
+    updatedFoods[editIndex] = newFood;
+    setFoods(updatedFoods);
+    setNewFood({
+      name: '',
+      calories: '',
+      protein: '',
+      fat: '',
+      carbs: '',
+      quantity: '',
+      mealType: 'Breakfast',
+    });
+    setEditIndex(-1);
   };
 
   return (
@@ -102,17 +125,44 @@ const MealLogger: React.FC = () => {
           <option value="Dinner">Dinner</option>
           <option value="Snack">Snack</option>
         </select>
-        <button style={buttonStyle} onClick={addFoodToMeal}>
-          Add Food
-        </button>
+        {editIndex === -1 ? (
+          <button style={buttonStyle} onClick={() => setFoods(prevFoods => [...prevFoods, newFood])}>
+            Add Food
+          </button>
+        ) : (
+          <button style={buttonStyle} onClick={handleSave}>
+            Save
+          </button>
+        )}
       </div>
 
       <div>
-        <h2 className="text-xl font-bold mb-4">Foods in the Meal</h2>
+      <h2 className="text-xl font-bold mb-4">Meals</h2>
         <ul>
           {foods.map((food, index) => (
             <li key={index}>
-              {food.name} - Calories: {food.calories} - Protein: {food.protein}g - Fats: {food.fat}g - Carbs: {food.carbs}g - Quantity: {food.quantity}oz. - Meal Type: {food.mealType}
+              {editIndex === index ? (
+                <span>
+                  <button style={buttonStyle} onClick={handleSave}>
+                    Save
+                  </button>
+                  <button style={buttonStyle} onClick={() => setEditIndex(-1)}>
+                    Cancel
+                  </button>
+                </span>
+              ) : (
+                <span>
+                  <button style={buttonStyle} onClick={() => handleEdit(index)}>
+                    Edit
+                  </button>
+                  <button style={buttonStyle} onClick={() => setFoods(prevFoods => prevFoods.filter((_, i) => i !== index))}>
+                    Remove
+                  </button>
+                </span>
+              )}
+              <span>
+                {food.name} - Calories: {food.calories} - Protein: {food.protein}g - Fats: {food.fat}g - Carbs: {food.carbs}g - Quantity: {food.quantity}oz. - Meal Type: {food.mealType}
+              </span>
             </li>
           ))}
         </ul>
