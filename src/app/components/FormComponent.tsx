@@ -53,8 +53,10 @@ const FormComponent: React.FC = () => {
       // console.log(response.data.token)
       const responseToken: string = response.data.token
       const decodedToken: User = jwtDecode(responseToken)
-      console.log(decodedToken)
-      updateUser({...user, ...decodedToken, authenticationToken: responseToken})
+      // console.log(decodedToken)
+      const subbedCommunities = await axios.get("http://localhost:8000/user-communities/" + decodedToken.id)
+      updateUser({...user, ...decodedToken, authenticationToken: responseToken, communities: subbedCommunities.data})
+      // console.log(subbedCommunities.data)
       router.push("/homepage")
     } catch (error) {
       if (axios.isAxiosError(error)) {

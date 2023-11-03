@@ -7,9 +7,7 @@ import { PrivacySettings } from '@/types/PrivacySettings';
 import { WorkoutPlan } from '@/types/WorkoutPlan';
 
 export interface User {
-  name: ReactNode;
   id: number;
-  name: ReactNode;
   username: string;
   email: string;
   meals: Array<Meal>;
@@ -45,5 +43,5 @@ export const initialUserState: User = {
   notification: [],
   moderator: false,
   authenticationToken: '',
-  exp: -1,
+  exp: -1
 };
