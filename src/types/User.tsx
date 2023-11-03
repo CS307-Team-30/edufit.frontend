@@ -8,7 +8,6 @@ import { WorkoutPlan } from '@/types/WorkoutPlan';
 
 export interface User {
   name: ReactNode;
-  id: string;
   id: number;
   name: ReactNode;
   username: string;
