@@ -54,7 +54,7 @@ const FormComponent: React.FC = () => {
       const responseToken: string = response.data.token
       const decodedToken: User = jwtDecode(responseToken)
       console.log(decodedToken)
-      updateUser({...user, ...decodedToken})
+      updateUser({...user, ...decodedToken, authenticationToken: responseToken})
       router.push("/homepage")
     } catch (error) {
       if (axios.isAxiosError(error)) {

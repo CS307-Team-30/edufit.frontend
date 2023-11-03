@@ -1,3 +1,4 @@
+"use client"
 import { motion, useScroll } from 'framer-motion';
 import * as React from 'react';
 import { useState } from 'react';
@@ -15,6 +16,7 @@ import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
 
 import Toggle from '@/app/components/Toggle';
+import { useGlobalStore } from '@/app/stores/UserStore';
 
 // import { RootState } from '@/types/types';
 
@@ -37,7 +39,7 @@ export default function Header() {
 
   const [value, setValue] = useState('')
 
-  // const user: User = useSelector((state: RootState) => state.user);
+  const communities = useGlobalStore(state => state.communities)
 
 
   const handleChange = (value: any) => {
@@ -69,8 +71,16 @@ export default function Header() {
         </div>
         </Link>
         </div>
-        <div className='flex justify-end text-2xl'>
+        <div className='relative flex justify-end text-2xl'>
           <SearchComponent value={value} handleChange={handleChange} />
+          <div className='z-50 absolute left-0 top-2/3 bg-white font-bold text-xl rounded-xl'>
+              {communities
+                  .filter(item => (value !== '' && item.name.includes(value))) // Filter condition
+                  .map((item, index) => (
+                      <UnstyledLink href={"/community/" + item.id} className='top-1/2 mt-4 text-black hover:bg-pink-300 px-4 py-2' key={index}>{item.name}</UnstyledLink>
+                  ))
+              }
+          </div>
           <Link className='rounded-full' href="/user">
             <Image className='rounded-full h-[80px] w-[80px]' src="/images/user_icon.jpg" alt="user icon" width={80} height={80}/>
 

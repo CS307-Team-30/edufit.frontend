@@ -8,7 +8,8 @@ import { WorkoutPlan } from '@/types/WorkoutPlan';
 
 export interface User {
   name: ReactNode;
-  id: string;
+  id: number;
+  name: ReactNode;
   username: string;
   email: string;
   meals: Array<Meal>;
@@ -24,7 +25,7 @@ export interface User {
 }
 
 export const initialUserState: User = {
-  id: '',
+  id: -1,
   username: '',
   email: '',
   meals: [],
