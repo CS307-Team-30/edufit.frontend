@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { User } from 'lucide-react';
 import React, { useState } from 'react';
 
 import { useGlobalStore } from '@/app/stores/UserStore';
