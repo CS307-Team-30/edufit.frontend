@@ -44,6 +44,7 @@ const FormComponent: React.FC = () => {
   const user = useGlobalStore((state) => state.user)
   const updateUser = useGlobalStore((state) => state.updateUser)
   const updatePosts = useGlobalStore((state) => state.updatePosts)
+  const updateProfile = useGlobalStore((state) => state.updateProfile)
   const router = useRouter();
 
   const handleSubmit = async (values: FormValues) => {
@@ -56,9 +57,11 @@ const FormComponent: React.FC = () => {
       const decodedToken: User = jwtDecode(responseToken)
       // console.log(decodedToken)
       const subbedCommunities = await axios.get("http://localhost:8000/user-communities/" + decodedToken.id)
-      updateUser({...user, ...decodedToken, authenticationToken: responseToken, communities: subbedCommunities.data})
-      const userPosts= await axios.get("http://localhost:8000/user-subscribed-posts/" + decodedToken.id)
+      updateUser({ ...user, ...decodedToken, authenticationToken: responseToken, communities: subbedCommunities.data })
+      const userPosts = await axios.get("http://localhost:8000/user-subscribed-posts/" + decodedToken.id)
       updatePosts(userPosts.data)
+      const profile = await axios.get("http://localhost:8000/get-profile/" + decodedToken.id)
+      updateProfile(profile.data)
       // console.log(subbedCommunities.data)
       router.push("/homepage")
     } catch (error) {
