@@ -1,10 +1,9 @@
-import { Editor } from '@tinymce/tinymce-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import * as React from 'react';
-import { useRef } from 'react';
 
 import '@/styles/colors.css';
 
+import CommentstBox from '@/app/components/CommentsBox';
 import Navbar from '@/app/components/Navbar';
 import { useGlobalStore } from '@/app/stores/UserStore';
 
@@ -24,12 +23,6 @@ export default function ComponentsLayout({
   );
 
   const commentsListModal = useGlobalStore((state) => state.commentsModal);
-  const editorRef = useRef(null);
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
 
   return (
     <div className='relative min-h-screen w-screen bg-pink-300'>
@@ -48,28 +41,9 @@ export default function ComponentsLayout({
             initial={{ scale: 0.4 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
-            className='fixed left-0 right-0 top-24 z-50 ml-auto mr-auto h-[600px] w-[750px] rounded-lg bg-white'
+            className='fixed left-0 right-0 top-24 z-50 ml-auto mr-auto min-h-[100px] w-[750px] rounded-lg bg-white'
           >
-            <Editor
-              onInit={(evt, editor) => (editorRef.current = editor)}
-              initialValue='<p>This is the initial content of the editor.</p>'
-              init={{
-                height: 500,
-                menubar: false,
-                plugins: [
-                  'advlist autolink lists link image charmap print preview anchor',
-                  'searchreplace visualblocks code fullscreen',
-                  'insertdatetime media table paste code help wordcount'
-                ],
-                toolbar:
-                  'undo redo | formatselect | ' +
-                  'bold italic backcolor | alignleft aligncenter ' +
-                  'alignright alignjustify | bullist numlist outdent indent | ' +
-                  'removeformat | help',
-                content_style:
-                  'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-              }}
-            />
+            <CommentstBox />
           </motion.div>
         )}
       </AnimatePresence>

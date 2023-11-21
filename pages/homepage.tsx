@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 import '../src/styles/colors.css';
 import '../src/styles/globals.css';
@@ -11,16 +12,23 @@ import Sidebar from '@/app/components/Sidebar';
 import { useGlobalStore } from '@/app/stores/UserStore';
 
 import { Community } from '@/types/Community';
+import { initialUserState } from '@/types/User';
 
 type HomePageProps = {
   communities: Array<Community>;
 };
 
 export default function Homepage({ communities }: HomePageProps) {
-  const user = useGlobalStore((state) => state.user);
+  const [user, setUser] = useState(initialUserState);
+
+  const glUser = useGlobalStore((state) => state.user);
 
   const updateCommunities = useGlobalStore((state) => state.update);
   const posts = useGlobalStore((state) => state.homepagePosts);
+
+  useEffect(() => {
+    setUser(glUser);
+  }, [glUser]);
 
   updateCommunities(communities);
 
