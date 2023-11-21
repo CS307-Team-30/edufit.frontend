@@ -64,9 +64,10 @@ export default function CommentstBox() {
 
           <Field
             type='text'
+            as="textarea"
             name='comment'
             placeholder='Enter comment here'
-            className='mb-2 w-full rounded border border-pink-300 p-2' // Updated padding
+            className='mb-2 min-h-[300px] w-full rounded border border-pink-300 p-2' // Updated padding
           />
           <ErrorMessage name='comment' component='div' />
 

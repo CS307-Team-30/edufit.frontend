@@ -22,7 +22,6 @@ export default function ComponentsLayout({
     (state) => state.setAddCommentsModal
   );
 
-  const commentsListModal = useGlobalStore((state) => state.commentsModal);
 
   return (
     <div className='relative min-h-screen w-screen bg-pink-300'>
