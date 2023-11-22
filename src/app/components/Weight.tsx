@@ -4,6 +4,7 @@ import {
   Legend,
   Line,
   LineChart,
+  ReferenceLine,
   Tooltip,
   XAxis,
   YAxis,
@@ -55,19 +56,22 @@ const WeightTracker = () => {
         />
         <p>Target Weight: {targetWeight} lbs</p>
       </div>
-      <LineChart width={600} height={300} data={weights}>
-        <CartesianGrid strokeDasharray='3 3' />
-        <XAxis dataKey='date' />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line
-          type='monotone'
-          dataKey='weight'
-          stroke='#8884d8'
-          activeDot={{ r: 8 }}
-        />
-      </LineChart>
+      <LineChart width={400} height={400} data={weights} style={{ background: '#f0f0f0', border: '1px solid #ccc', borderRadius: '8px' }}>
+    <CartesianGrid stroke='transparent'/>
+    <XAxis dataKey='date' />
+    <YAxis />
+    <Tooltip />
+    <Legend />
+    <ReferenceLine y={targetWeight} stroke='red' strokeDasharray='3 3' label={`Target: ${targetWeight}`} />
+    <Line
+      type='monotone'
+      dataKey='weight'
+      stroke='#4CAF50'
+      strokeWidth={2}
+      dot={{ fill: '#4CAF50', r: 6, stroke: 'white', strokeWidth: 2 }} 
+      activeDot={{ r: 8 }}
+    />
+  </LineChart>
     </div>
   );
 };
