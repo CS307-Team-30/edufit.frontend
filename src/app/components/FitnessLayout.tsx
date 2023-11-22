@@ -15,6 +15,8 @@ import Navbar from '@/app/components/Navbar';
 import WeightTracker from '@/app/components/Weight';
 import WorkoutComponent from '@/app/components/WorkoutComponent';
 
+
+
 const categoryIcons = {
   Nutrition: faCarrot,
   Workouts: faDumbbell,
