@@ -12,6 +12,7 @@ import Hydration from '@/app/components/Hydration';
 import Meals from '@/app/components/Meals';
 import GoalMilestoneInput from '@/app/components/MileStone';
 import Navbar from '@/app/components/Navbar';
+import Preset from '@/app/components/Preset';
 import WeightTracker from '@/app/components/Weight';
 import WorkoutComponent from '@/app/components/WorkoutComponent';
 
@@ -69,7 +70,7 @@ const CircularArrow = ({ onClick, direction, disabled }) => (
 export default function FitnessLayout({ children }: { children: React.ReactNode }) {
   const categories = [
     { name: 'Nutrition', components: React.Children.toArray(children).filter((child) => child.type === Meals || child.type === Hydration) },
-    { name: 'Workouts', components: React.Children.toArray(children).filter((child) => child.type === WorkoutComponent) },
+    { name: 'Workouts', components: React.Children.toArray(children).filter((child) => child.type === WorkoutComponent || child.type === Preset) },
     { name: 'Tracking', components: React.Children.toArray(children).filter((child) => child.type === WeightTracker || child.type === GoalMilestoneInput) },
     { name: 'Calculators', components: React.Children.toArray(children).filter((child) => child.type === HealthCalculator || child.type === OneRepMaxCalculator) },
   ];
