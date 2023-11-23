@@ -61,7 +61,14 @@ const FormComponent: React.FC = () => {
       const userPosts = await axios.get("http://localhost:8000/user-subscribed-posts/" + decodedToken.id)
       updatePosts(userPosts.data)
       const profile = await axios.get("http://localhost:8000/get-profile/" + decodedToken.id)
-      updateProfile(profile.data)
+      updateProfile(
+        {
+          user_id: profile.data.user_id,
+          nickname: profile.data.nickname,
+          bio: profile.data.bio,
+          profile_pic: profile.data.profile_pic
+        }
+      )
       // console.log(subbedCommunities.data)
       router.push("/homepage")
     } catch (error) {
