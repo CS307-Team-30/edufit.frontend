@@ -2,10 +2,9 @@
 import { motion, useScroll } from 'framer-motion';
 import * as React from 'react';
 import { useState } from 'react';
+import '@/styles/calendar'
 
 import UnstyledLink from '@/components/links/UnstyledLink';
-
-
 const links = [
   { href: '/', label: 'Route 1' },
   { href: '/', label: 'Route 2' },
@@ -17,6 +16,8 @@ import { FaSearch } from 'react-icons/fa';
 
 import Toggle from '@/app/components/Toggle';
 import { useGlobalStore } from '@/app/stores/UserStore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
 // import { RootState } from '@/types/types';
 
@@ -53,11 +54,17 @@ export default function Header() {
 
   return (
     <div className='sticky top-0 z-50 bg-white'>
-    <motion.header className='sticky top-0 z-50 border min-h-[100px] md:px-32 px-10 pt-8 pb-6 shadow-md text-4xl'>
-      <div className='grid grid-cols-3'>
+    <motion.header className='sticky top-0 z-50 border min-h-[100px] md:px-16 px-10 pt-8 pb-6 shadow-md text-4xl'>
+      <div className='flex flex-row justify-between space-x-0'>
         <Toggle />
+        <Link className="mt-6" href="/calendar">
+        <div className='flex flex-col items-center mt-0'>
+          <FontAwesomeIcon icon={faCalendarAlt}/>
+          <h1 className="text-xl">Calendar</h1>
+        </div>
+        </Link>
         <div>
-
+        
         <Link href="/homepage" className='flex flex-row items-center justify-center space-x-2'>
         <Image src="/images/logo.png" alt="logo" height={40} width={100}/>
         <div className='flex flex-row'>
