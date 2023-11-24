@@ -71,17 +71,20 @@ const OneRepMaxCalculator: React.FC = () => {
     </ul>
   </div>
 
-  <div className="flex items-end">
+  <div className="flex items-end mb-0.5">
     <button style={{...buttonStyle, marginLeft: "100px"}} onClick={calculateOneRepMax}>
       Calculate One Rep Max
     </button>
-    {oneRepMax !== null && (
-      <div className="mt-4">
-        <p className="text-lg font-semibold">One Rep Max: {oneRepMax} lbs</p>
-      </div>
-    )}
   </div>
-</div>
+    <div>
+      {oneRepMax !== null && (
+        <div>
+          <p className="text-lg font-semibold">One Rep Max: {oneRepMax} lbs</p>
+        </div>
+      )}
+    </div>
+    
+  </div>
   );
 };
 
