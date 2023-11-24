@@ -45,40 +45,43 @@ const OneRepMaxCalculator: React.FC = () => {
 
   return (
     <div className="grid grid-cols-2 gap-4 p-4 text-black">
-      <div>
-        <h2>One Rep Max Calculator</h2>
-        <ul style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '5px' }}>
-          <li>Weight (lbs): {inputValues.weight}</li>
-          <li>
-            <input
-              type="number"
-              name="weight"
-              value={inputValues.weight}
-              onChange={handleChange}
-              className="bg-pink-100 border border-gray-300 rounded-md p-2"
-            />
-          </li>
-          <li>Repetitions: {inputValues.reps}</li>
-          <li>
-            <input
-              type="number"
-              name="reps"
-              value={inputValues.reps}
-              onChange={handleChange}
-              className="bg-pink-100 border border-gray-300 rounded-md p-2"
-            />
-          </li>
-        </ul>
-        <button style={buttonStyle} onClick={calculateOneRepMax}>
-          Calculate One Rep Max
-        </button>
-        {oneRepMax !== null && (
-          <div className="mt-4">
-            <p className="text-lg font-semibold">One Rep Max: {oneRepMax} lbs</p>
-          </div>
-        )}
+  <div>
+    <h2>One Rep Max Calculator</h2>
+    <ul style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '5px' }}>
+      <li>Weight (lbs): {inputValues.weight}</li>
+      <li>
+        <input
+          type="number"
+          name="weight"
+          value={inputValues.weight}
+          onChange={handleChange}
+          className="bg-pink-100 border border-gray-300 rounded-md p-2"
+        />
+      </li>
+      <li>Repetitions: {inputValues.reps}</li>
+      <li>
+        <input
+          type="number"
+          name="reps"
+          value={inputValues.reps}
+          onChange={handleChange}
+          className="bg-pink-100 border border-gray-300 rounded-md p-2"
+        />
+      </li>
+    </ul>
+  </div>
+
+  <div className="flex items-end">
+    <button style={{...buttonStyle, marginLeft: "100px"}} onClick={calculateOneRepMax}>
+      Calculate One Rep Max
+    </button>
+    {oneRepMax !== null && (
+      <div className="mt-4">
+        <p className="text-lg font-semibold">One Rep Max: {oneRepMax} lbs</p>
       </div>
-    </div>
+    )}
+  </div>
+</div>
   );
 };
 
