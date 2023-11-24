@@ -44,7 +44,7 @@ function ImageUpload() {
       })
         .then((response) => {
           if (response.ok) {
-            router.push('/profile');
+            router.push('/homepage');
           }
         })
         .catch((error) => {

@@ -1,7 +1,6 @@
 "use client"
 import { motion, useScroll } from 'framer-motion';
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import UnstyledLink from '@/components/links/UnstyledLink';
@@ -52,6 +51,27 @@ export default function Header() {
 
   // }, [user])
 
+  const [imageURL, setImageURL] = useState('');
+  const profile = useGlobalStore((state) => state.profile);
+  const profile_pic = profile.profile_pic;
+
+  useEffect(() => {
+    // Fetch the image URL from the server
+    fetch('http://localhost:8000/images/' + profile_pic)  // Replace with the actual endpoint URL
+      .then((response) => {
+        if (response.ok) {
+          return response.url;
+        }
+        throw new Error('Failed to fetch image.');
+      })
+      .then((url) => {
+        setImageURL(url);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return (
     <div className='sticky top-0 z-50 bg-white'>
       <motion.header className='sticky top-0 z-50 border min-h-[100px] md:px-32 px-10 pt-8 pb-6 shadow-md text-4xl'>
@@ -83,7 +103,7 @@ export default function Header() {
               }
             </div>
             <Link className='rounded-full' href="/profile">
-              <Image className='rounded-full h-[80px] w-[80px]' src="/images/user_icon.jpg" alt="user icon" width={80} height={80} />
+              <img className='rounded-full h-[80px] w-[80px]' src={imageURL} alt="user icon" width={80} height={80} />
 
             </Link>
           </div>

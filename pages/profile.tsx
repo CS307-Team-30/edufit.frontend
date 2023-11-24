@@ -8,6 +8,7 @@ import '../src/styles/globals.css';
 import { useGlobalStore } from '@/app/stores/UserStore';
 
 import { Profile } from '@/types/Profile';
+import PasswordConfirmationForm from '@/app/components/PasswordConfirm';
 
 export default function Profile() {
   const profile = useGlobalStore((state) => state.profile);
@@ -23,6 +24,9 @@ export default function Profile() {
       </div>
       <div className='mt-12 min-h-[500px] bg-white px-12 pt-20 md:mx-40'>
         <ImageUpload />
+      </div>
+      <div className='mt-12 min-h-[500px] bg-white px-12 pt-20 md:mx-40'>
+        <PasswordConfirmationForm />
       </div>
     </ComponentsLayout>
   );
