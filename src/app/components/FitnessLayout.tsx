@@ -58,12 +58,12 @@ const Card = ({ children, currentIndex, targetIndex }) => {
 const CircularArrow = ({ onClick, direction, disabled }) => (
   <motion.button
     whileTap={{ scale: 0.5 }}
-    className={`text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 shadow-lg shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-lg ml-40 text-sm px-5 py-2.5 mr-40 text-center mb-2 ${direction === 'left' ? 'ml-8' : 'mr-8'}`}
+    className={`text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 shadow-lg shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-lg text-sm px-40 py-2.5 text-center mb-2 ${direction === 'left' ? 'ml-8' : 'mr-8'}`}
     onClick={onClick}
     disabled={disabled}
     style={{ opacity: disabled ? 0.5 : 1 }}
   >
-    {direction === 'left' ? '←' : '→'}
+    {direction === 'left' ? 'PREVIOUS CARD' : 'NEXT CARD'}
   </motion.button>
 );
 
