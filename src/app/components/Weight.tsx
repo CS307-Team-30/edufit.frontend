@@ -36,25 +36,28 @@ const WeightTracker = () => {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col">
       <h2>Weight Tracker</h2>
       <div>
         <input
+          className="bg-pink-100 border border-gray-300 rounded-md p-2"
           type='number'
           value={currentWeight}
           onChange={(e) => setCurrentWeight(e.target.value)}
-          placeholder='Enter your weight in lbs'
+          placeholder='Enter your weight (lbs)'
         />
-        <button onClick={handleWeightSubmit}>Submit Weight</button>
       </div>
       <div>
         <input
+          className="bg-pink-100 border border-gray-300 rounded-md p-2"
           type='number'
           value={targetWeight}
           onChange={handleTargetWeightChange}
-          placeholder='Enter your target weight'
+          placeholder='Enter target weight (lbs)'
         />
-        <p>Target Weight: {targetWeight} lbs</p>
+      </div>
+      <div>
+        <button className="bg-pink-300 mt-2 mb-2 hover:-translate-y-1 transition-transform duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleWeightSubmit}>Submit</button>
       </div>
       <LineChart width={400} height={400} data={weights} style={{ background: '#f0f0f0', border: '1px solid #ccc', borderRadius: '8px' }}>
     <CartesianGrid stroke='transparent'/>
@@ -62,7 +65,7 @@ const WeightTracker = () => {
     <YAxis />
     <Tooltip />
     <Legend />
-    <ReferenceLine y={targetWeight} stroke='red' strokeDasharray='3 3' label={`Target: ${targetWeight}`} />
+    <ReferenceLine y={targetWeight} stroke='red' strokeDasharray='3 3' label={`Target Weight: ${targetWeight}`} />
     <Line
       type='monotone'
       dataKey='weight'

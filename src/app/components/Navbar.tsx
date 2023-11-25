@@ -10,14 +10,14 @@ const links = [
   { href: '/', label: 'Route 2' },
 ];
 
+import {faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
 
 import Toggle from '@/app/components/Toggle';
 import { useGlobalStore } from '@/app/stores/UserStore';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
 // import { RootState } from '@/types/types';
 

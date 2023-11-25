@@ -7,16 +7,6 @@ const OneRepMaxCalculator: React.FC = () => {
   });
   const [oneRepMax, setOneRepMax] = useState<string | null>(null);
 
-  const buttonStyle = {
-    backgroundColor: 'pink',
-    color: 'white',
-    padding: '10px 15px',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    marginLeft: '165px',
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -72,7 +62,7 @@ const OneRepMaxCalculator: React.FC = () => {
   </div>
 
   <div className="flex items-end mb-0.5">
-    <button style={{...buttonStyle, marginLeft: "100px"}} onClick={calculateOneRepMax}>
+    <button className="bg-pink-300 mt-2 hover:-translate-y-1 transition-transform duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" style={{ marginLeft: "100px"}} onClick={calculateOneRepMax}>
       Calculate One Rep Max
     </button>
   </div>

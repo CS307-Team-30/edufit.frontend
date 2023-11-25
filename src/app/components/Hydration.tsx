@@ -2,6 +2,8 @@ import axios from 'axios';
 import { User } from 'lucide-react';
 import React, { useState } from 'react';
 
+import '@/styles/hydrationAnimation.css';
+
 import { useGlobalStore } from '@/app/stores/UserStore';
 
 // Hydration Component
@@ -66,68 +68,47 @@ const Hydration: React.FC<{ hydrationInfo: any }> = ({ hydrationInfo }) => {
     }
 
     return (
-      <div>
-        {fillHeight === 0 && (
-          <p className="text-red-500">You are dehydrated!</p>
-        )}
-        <h2>Hydration</h2>
-        <div style={{ border: '1px solid #ccc', width: '100px', height: '200px', position: 'relative' }}>
-          <div
-            style={{
-              width: '100%',
-              height: '200px',
-              backgroundColor: 'lightblue',
-              position: 'absolute',
-              bottom: 0,
-              zIndex: 1,
-              overflow: 'hidden',
-            }}
-          >
-            {/* Liquid with animation class */}
-            <div
-              style={{
-                width: '100%',
-                height: `${fillHeight}px`,
-                backgroundColor: 'blue',
-                position: 'absolute',
-                bottom: 0,
-              }}
-            />
+      <div className="flex">
+        <div className="flex flex-col order-2">
+          {fillHeight === 0 && (
+            <p className="text-red-500">You are dehydrated!</p>
+          )}
+          <h2>Hydration</h2>
+          <div className="water" style={{ '--fill-height': `${fillHeight}px` } as any}>
+            
           </div>
+          <p>Water Consumed: {hydration.waterConsumed}ml</p>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <button style={buttonStyle} onClick={save}>
+              Save
+            </button>
+            <button style={buttonStyle} onClick={() => drink(250)}>
+              Drink 250ml
+            </button>
+            <button style={buttonStyle} onClick={() => drink(500)}>
+              Drink 500ml
+            </button>
+            <button style={buttonStyle} onClick={() => drink(1000)}>
+              Drink 1000ml
+            </button>
+          </div>
+          {hydrationInfo && (
+            <div>
+              <h2>Current User's Water Logs</h2>
+              <p>Water Consumed: {hydrationInfo.waterConsumed}ml</p>
+            </div>
+          )}
+          {previousLogs.length > 0 && (
+            <div>
+              <h2>Previous Water Logs</h2>
+              <ul>
+                {previousLogs.map((log, index) => (
+                  <li key={index}>{`Water Log ${index + 1}: User ID: ${log.user_id}, Water Consumed: ${log.waterConsumed}ml`}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
-        <p>Water Consumed: {hydration.waterConsumed}ml</p>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <button style={buttonStyle} onClick={save}>
-            Save
-          </button>
-          <button style={buttonStyle} onClick={() => drink(250)}>
-            Drink 250ml
-          </button>
-          <button style={buttonStyle} onClick={() => drink(500)}>
-            Drink 500ml
-          </button>
-          <button style={buttonStyle} onClick={() => drink(1000)}>
-            Drink 1000ml
-          </button>
-        </div>
-        <div>
-        {hydrationInfo && (
-          <div>
-            <h2>Current User's Water Logs</h2>
-            <p>Water Consumed: {hydrationInfo.waterConsumed}ml</p>
-          </div>
-        )}
-        {previousLogs.length > 0 && (
-          <div>
-            <h2>Previous Water Logs</h2>
-            <ul>
-              {previousLogs.map((log, index) => (
-                <li key={index}>{`Water Log ${index + 1}: User ID: ${log.user_id}, Water Consumed: ${log.waterConsumed}ml`}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
       </div>
     );
   };
