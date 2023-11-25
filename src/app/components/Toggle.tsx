@@ -26,7 +26,7 @@ const Toggle = () => {
 
   return (
     <div
-      className={`relative inline-block h-full max-h-[26px] w-12 select-none rounded-xl align-middle transition duration-200 ease-in ${
+      className={`relative mt-8 inline-block h-full max-h-[26px] w-12 select-none rounded-xl align-middle transition duration-200 ease-in ${
         nav ? 'bg-pink-500' : 'bg-pink-100'
       }`}
       onClick={() => handleToggle()}

@@ -1,18 +1,16 @@
 import axios from 'axios';
-import { User } from 'lucide-react';
 import React, { useState } from 'react';
 
-import '@/styles/hydrationAnimation.css';
-
+// import '@/styles/hydrationAnimation.css';
 import { useGlobalStore } from '@/app/stores/UserStore';
 
 // Hydration Component
 const Hydration: React.FC<{ hydrationInfo: any }> = ({ hydrationInfo }) => {
   const [hydration, setHydration] = useState({
-    waterConsumed: 0,
+    waterConsumed: 0
   });
 
-  const userId = useGlobalStore(state => state.user.id)
+  const userId = useGlobalStore((state) => state.user.id);
   const [previousLogs, setPreviousLogs] = useState<any[]>([]);
 
   const buttonStyle = {
@@ -21,40 +19,41 @@ const Hydration: React.FC<{ hydrationInfo: any }> = ({ hydrationInfo }) => {
     padding: '10px 15px',
     border: 'none',
     borderRadius: '4px',
-    cursor: 'pointer',
+    cursor: 'pointer'
   };
 
   const drink = (amount: number) => {
     setHydration((prevState) => ({
-      waterConsumed: prevState.waterConsumed + amount,
+      waterConsumed: prevState.waterConsumed + amount
     }));
   };
 
   const save = () => {
-    axios.post('http://localhost:8000/hydration', {
-      id: userId,
-      waterConsumed: hydration.waterConsumed
-    })
-    .then(response => {
-      setHydration({
-        waterConsumed: 0
+    axios
+      .post('http://localhost:8000/hydration', {
+        id: userId,
+        waterConsumed: hydration.waterConsumed
+      })
+      .then((response) => {
+        setHydration({
+          waterConsumed: 0
+        });
+      })
+      .catch((error) => {
+        // Handle error, if needed
+        console.error('Error:', error);
       });
-    })
-    .catch(error => {
-      // Handle error, if needed
-      console.error("Error:", error);
-    });
-  axios.get(`http://localhost:8000/hydration/${userId}`)
-  .then(response => {
-    const hydrationInfo = response.data;
-    // Use hydrationInfo for displaying the water consumption information
-    setPreviousLogs(prevLogs => [...prevLogs, hydrationInfo]);
-  })
-  .catch(error => {
-    // Handle error, if needed
-    console.error("Error:", error);
-  });
-
+    axios
+      .get(`http://localhost:8000/hydration/${userId}`)
+      .then((response) => {
+        const hydrationInfo = response.data;
+        // Use hydrationInfo for displaying the water consumption information
+        setPreviousLogs((prevLogs) => [...prevLogs, hydrationInfo]);
+      })
+      .catch((error) => {
+        // Handle error, if needed
+        console.error('Error:', error);
+      });
   };
 
   // HydrationCard Component
@@ -68,15 +67,16 @@ const Hydration: React.FC<{ hydrationInfo: any }> = ({ hydrationInfo }) => {
     }
 
     return (
-      <div className="flex">
-        <div className="flex flex-col order-2">
+      <div className='flex'>
+        <div className='order-2 flex flex-col'>
           {fillHeight === 0 && (
-            <p className="text-red-500">You are dehydrated!</p>
+            <p className='text-red-500'>You are dehydrated!</p>
           )}
           <h2>Hydration</h2>
-          <div className="water" style={{ '--fill-height': `${fillHeight}px` } as any}>
-            
-          </div>
+          <div
+            className='water'
+            style={{ '--fill-height': `${fillHeight}px` } as any}
+          ></div>
           <p>Water Consumed: {hydration.waterConsumed}ml</p>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <button style={buttonStyle} onClick={save}>
@@ -103,7 +103,9 @@ const Hydration: React.FC<{ hydrationInfo: any }> = ({ hydrationInfo }) => {
               <h2>Previous Water Logs</h2>
               <ul>
                 {previousLogs.map((log, index) => (
-                  <li key={index}>{`Water Log ${index + 1}: User ID: ${log.user_id}, Water Consumed: ${log.waterConsumed}ml`}</li>
+                  <li key={index}>{`Water Log ${index + 1}: User ID: ${
+                    log.user_id
+                  }, Water Consumed: ${log.waterConsumed}ml`}</li>
                 ))}
               </ul>
             </div>
