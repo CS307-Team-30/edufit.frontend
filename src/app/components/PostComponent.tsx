@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import { BiDownvote, BiUpvote } from 'react-icons/bi';
+import { BiDownvote, BiSolidDownvote, BiSolidUpvote, BiUpvote } from 'react-icons/bi';
 import { FaEllipsisH } from 'react-icons/fa';
 
 import UnstyledLink from '@/components/links/UnstyledLink';
@@ -16,6 +16,8 @@ type PostComponentProps = {
   author: string;
   community: Community;
   content: string;
+  upvotes: Array<number>
+  downvotes: Array<number>
 };
 
 const PostComponent = ({
@@ -23,14 +25,104 @@ const PostComponent = ({
   author,
   community,
   content,
+  upvotes,
+  downvotes,
   id
 }: PostComponentProps) => {
   const username = useGlobalStore((state) => state.user.username);
+  const user = useGlobalStore(state=> state.user);
+  const userId = user.id
+
+
+
   const [displayOptions, setDisplayOptions] = useState(false);
+  const [upvoted, setUpvoted] = useState(false)
+
+
+
+  const [downvoted, setDownvoted] = useState(false)
+
+
+  useEffect(() => {
+    setUpvoted(false)
+    setDownvoted(false)
+
+    setVoteCount(upvotes.length - downvotes.length)
+    for (let i = 0; i < upvotes.length; i++) {
+      if (upvotes[i] === userId) {
+        if (!downvoted) {
+          setUpvoted(true)
+        }
+      }
+    }
+
+    for (let i = 0; i < downvotes.length; i++) {
+      if (downvotes[i] === userId) {
+        if (!upvoted) {
+          setDownvoted(true)
+        }
+      }
+    }
+ 
+  }, [downvoted, downvotes, upvoted, upvotes, userId])
+
+  const [voteCount, setVoteCount] = useState(upvotes.length - downvotes.length)
+
+
+  const sendVoteRequest = async (voteType: string) => {
+    try {
+      const response = await axios.post('http://localhost:8000/vote', {
+        vote_type: voteType,
+        user_id: userId,
+        post_id: id
+      });
+
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error sending vote request:', error);
+    }
+  };
+
+
+
+  const handleUpvote = () => {
+    sendVoteRequest('upvote');
+    if (upvoted) {
+      setVoteCount(voteCount - 1)
+      setUpvoted(false)
+    }
+    else if (downvoted) {
+      setDownvoted(false);
+      setUpvoted(true)
+      setVoteCount(voteCount + 2)
+    }
+    else {
+      setUpvoted(!upvoted);
+      setVoteCount(voteCount + 1)
+    }
+  };
+
+  const handleDownVote = () => {
+    sendVoteRequest('downvote');
+    if (downvoted) {
+      setDownvoted(false)
+      setVoteCount(voteCount + 1)
+    }
+    else if (upvoted) {
+      setUpvoted(false);
+      setDownvoted(true)
+      setVoteCount(voteCount - 2)
+    } else {
+      setDownvoted(!downvoted);
+      setVoteCount(voteCount - 1)
+    }
+  };
 
   const setAddCommentsModal = useGlobalStore(
     (state) => state.setAddCommentsModal
   );
+
+  const setViewCommentsModal = useGlobalStore(state => state.setViewCommentsModal)
 
   useEffect(() => {
     setDisplayOptions(username != author);
@@ -105,14 +197,22 @@ const PostComponent = ({
       </div>
       <div className='mt-4 flex flex-row justify-between'>
         <div className='space-x- mt-4 flex flex-row items-center text-2xl text-pink-600'>
-          <BiUpvote className='hover:cursor-pointer' />
-          <div className='mx-2 text-sm font-bold'>{0}</div>
-          <BiDownvote className='hover:cursor-pointer' />
+          <div onClick={handleUpvote}>
+            {upvoted && <BiSolidUpvote className='hover:cursor-pointer' />}
+            {!upvoted && <BiUpvote className='hover:cursor-pointer' />}
+          </div>
+          <div className='mx-2 text-sm font-bold'>{voteCount}</div>
+          <div onClick={handleDownVote}>
+            {downvoted && <BiSolidDownvote className='hover:cursor-pointer' />}
+            {!downvoted && <BiDownvote className='hover:cursor-pointer' />}
+          </div>
+
         </div>
         <div>
           <button
             onClick={() => {
               console.log('View comments');
+              setViewCommentsModal(id);
             }}
             className='mr-4 mt-4 h-[40px] w-[200px] rounded bg-pink-300 px-2 py-1 text-white hover:border hover:bg-pink-400'
           >
@@ -120,7 +220,7 @@ const PostComponent = ({
           </button>
           <button
             onClick={() => {
-              setAddCommentsModal(true);
+              setAddCommentsModal(id);
             }}
             className='mt-4 h-[40px] w-[200px] rounded bg-pink-300 px-2 py-1 text-white hover:border hover:bg-pink-400'
           >

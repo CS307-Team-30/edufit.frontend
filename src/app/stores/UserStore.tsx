@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { Comment } from '@/types/Comment';
 import { Community } from '@/types/Community';
+import { Instructor } from '@/types/Instructor';
 import { Post } from '@/types/Post';
 import { initialUserState, User } from '@/types/User';
 
@@ -11,14 +11,16 @@ type State = {
   toggle: boolean;
   communities: Array<Community>;
   homepagePosts: Array<Post>;
-  commentsModal: Array<Comment>;
-  addCommentsModal: boolean;
+  viewCommentsModal: number;
+  setViewCommentsModal: (viewCommentsModal: State['viewCommentsModal']) => void;
+  addCommentsModal: number;
   setAddCommentsModal: (addCommentsModal: State['addCommentsModal']) => void;
   setToggle: (toggle: State['toggle']) => void;
-  updateCommentsModal: (commentsModal: State['commentsModal']) => void;
   updateUser: (user: State['user']) => void;
   update: (communities: State['communities']) => void;
   updatePosts: (homepagePosts: State['homepagePosts']) => void;
+  instructor: Instructor;
+  updateInstructor:(instructor: State['instructor']) => void; 
 };
 
 // Create your store, which includes both state and (optionally) actions
@@ -26,21 +28,32 @@ export const useGlobalStore = create<State>()(
   persist(
     (set) => ({
       user: initialUserState,
+      instructor: {
+        id: -1,
+        bio: '',
+        email: '',
+        name: '',
+        courses: []
+      },
+
+      updateInstructor: (instructor) => set(() => ({ instructor: instructor })),
+
       toggle: false,
       communities: [],
       homepagePosts: [],
-      commentsModal: [],
-      addCommentsModal: false,
+      addCommentsModal: -1,
+      viewCommentsModal: -1,
+      setViewCommentsModal: (viewCommentsModal) =>
+        set(() => ({ viewCommentsModal: viewCommentsModal })),
       setToggle: (toggleState) => set(() => ({ toggle: toggleState })),
       setAddCommentsModal: (addCommentsModal) =>
         set(() => ({ addCommentsModal: addCommentsModal })),
-      updateCommentsModal: (commentsModal) =>
-        set(() => ({ commentsModal: commentsModal })),
       updateUser: (user) => set(() => ({ user: user })),
       update: (communities) => set(() => ({ communities: communities })),
       updatePosts: (homepagePosts) =>
-        set(() => ({ homepagePosts: homepagePosts }))
+        set(() => ({ homepagePosts: homepagePosts })),
     }),
+
     { name: 'global', getStorage: () => localStorage }
   )
 );

@@ -1,6 +1,7 @@
+import axios from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdCancel } from 'react-icons/md';
 import * as Yup from 'yup';
 
@@ -8,39 +9,51 @@ import { useGlobalStore } from '@/app/stores/UserStore';
 
 interface FormValues {
   comment: string;
-  postId: number;
+  post_id: number;
+  user_id: number;
 }
 
 export default function CommentstBox() {
-  const [toggle, setToggle] = useState(true);
+  const globPostId = useGlobalStore(state=> state.addCommentsModal)
+  const [postId, setPostId] = useState(-1)
+
+  useEffect(() => {
+    setPostId(globPostId)
+    console.log(globPostId)
+  }, [globPostId])
+
+
+  const globUserId = useGlobalStore(state => state.user.id)
+
 
   const postSchema = Yup.object().shape({
     comment: Yup.string().required('Comment is required')
   });
 
   const handleSubmit = async (values: FormValues) => {
-    // console.log(values)
-    // try {
-    //   const pos = { authToken: authtoken, ...values };
-    //   console.log(pos);
-    //   const response = await axios.post(
-    //     'http://localhost:8000/create-post',
-    //     pos
-    //   );
-    //   console.log(response);
-    // } catch (error) {
-    //   if (axios.isAxiosError(error)) {
-    //     console.error('Post failed', error.response?.data);
-    //   } else {
-    //     console.error('An unexpected error occurred:', error);
-    //   }
-    // }
+    console.log(values)
+    try {
+      const pos = {...values, post_id: postId};
+      console.log(pos);
+      const response = await axios.post(
+        'http://localhost:8000/add-comment',
+        pos
+      );
+      console.log(response);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Comment failed', error.response?.data);
+      } else {
+        console.error('An unexpected error occurred:', error);
+      }
+    }
   };
 
   const initialValues = {
     // authtoken: authtoken,
     comment: '',
-    postId: -1
+    post_id: postId,
+    user_id: globUserId
   };
   const storeModalState = useGlobalStore((state) => state.setAddCommentsModal);
 
@@ -55,7 +68,7 @@ export default function CommentstBox() {
           <div className=' mb-4 flex flex-row items-start justify-between'>
             <h3>Comment</h3>
             <motion.button
-              onClick={() => storeModalState(false)}
+              onClick={() => storeModalState(-1)}
               className='left-1/2 text-pink-500'
             >
               <MdCancel className='text-xl' />

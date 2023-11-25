@@ -9,7 +9,7 @@ export interface Post {
   author: User;
   title: string;
   content: string;
-  upvote: Array<User>;
-  downvote: Array<User>;
+  upvotes: Array<User>;
+  downvotes: Array<User>;
   // comments: Array<Comment>
 }

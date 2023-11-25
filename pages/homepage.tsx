@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { PiMaskSad } from "react-icons/pi";
 
 import '../src/styles/colors.css';
 import '../src/styles/globals.css';
@@ -24,13 +25,34 @@ export default function Homepage({ communities }: HomePageProps) {
   const glUser = useGlobalStore((state) => state.user);
 
   const updateCommunities = useGlobalStore((state) => state.update);
-  const posts = useGlobalStore((state) => state.homepagePosts);
+  const gposts = useGlobalStore((state) => state.homepagePosts);
+  const [posts, setPosts] = useState(gposts)
+
+  const [sortMethod, setSortMethod] = useState('default'); // 'default', 'mostUpvoted', 'mostDownvoted'
+
 
   useEffect(() => {
     setUser(glUser);
-  }, [glUser]);
+    setPosts(gposts)
+  }, [glUser, gposts]);
 
   updateCommunities(communities);
+
+  const handleSortChange = (method: string) => {
+    setSortMethod(method);
+  };
+
+
+  const sortedPosts = [...posts].sort((a, b) => {
+    if (sortMethod === 'mostUpvoted') {
+      return (b.upvotes.length - b.downvotes.length) - (a.upvotes.length - a.downvotes.length);
+    } else if (sortMethod === 'mostDownvoted') {
+      return (b.downvotes.length - b.upvotes.length) - (a.downvotes.length - a.upvotes.length);
+    }
+    // Default sorting (or any other custom sorting logic)
+    return a.id - b.id; // Example: sorting by post ID
+  });
+
 
   if (user.exp != -1) {
     return (
@@ -41,17 +63,29 @@ export default function Homepage({ communities }: HomePageProps) {
             id='threads'
             className='relative mb-24 ml-8 mr-32 w-full flex-col justify-center bg-pink-300'
           >
-            {posts.map((item, index) => (
-              <div key={index}>
-                <PostComponent
-                  id={item.id}
-                  author={item.author.username}
-                  title={item.title}
-                  community={item.community}
-                  content={item.content}
-                />
-              </div>
-            ))}
+            <div className='mx-24 my-12 space-x-4 text-pink-600'>
+              <button className='bg-white hover:scale-105 rounded py-1 px-2 font-bold' onClick={() => handleSortChange('default')}>Default</button>
+              <button className='bg-white hover:scale-105 rounded py-1 px-2 font-bold' onClick={() => handleSortChange('mostUpvoted')}>Most Upvoted</button>
+              <button className='bg-white hover:scale-105 rounded py-1 px-2 font-bold' onClick={() => handleSortChange('mostDownvoted')}>Most Downvoted</button>
+            </div>
+
+            {sortedPosts.length === 0 ? (
+              <h1 className='text-center pt-12 text-pink-700 font-bold flex flex-row items-center justify-center '>No posts <PiMaskSad className='text-5xl ml-3' /></h1>
+            ) : (
+              sortedPosts.map((item, index) => (
+                <div key={index}>
+                  <PostComponent
+                    id={item.id}
+                    author={item.author.username}
+                    title={item.title}
+                    community={item.community}
+                    content={item.content}
+                    upvotes={item.upvotes}
+                    downvotes={item.downvotes}
+                  />
+                </div>
+              ))
+            )}
           </div>
           <PostBox />
         </div>
