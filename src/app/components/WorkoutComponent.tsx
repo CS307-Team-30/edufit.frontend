@@ -25,16 +25,6 @@ const WorkoutComponent: React.FC = () => {
   const [addingSetToExerciseIndex, setAddingSetToExerciseIndex] = useState<number | null>(null);
   const [showingSetsOfExerciseIndex, setShowingSetsOfExerciseIndex] = useState<number | null>(null);
 
-  const buttonStyle = {
-    backgroundColor: 'pink',
-    color: 'white',
-    padding: '10px 15px',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    marginLeft: '20px',
-  };
-
   const startNewWorkout = () => {
     if (newWorkoutName) {
       setCurrentWorkout({ name: newWorkoutName, exercises: [] });
@@ -92,10 +82,10 @@ const WorkoutComponent: React.FC = () => {
             onChange={(e) => setNewWorkoutName(e.target.value)}
             style={{ marginRight: '10px' }}
           />
-          <button onClick={startNewWorkout} style={buttonStyle}>Start Workout</button>
+          <button className="bg-pink-300 mt-2 mb-2 hover:-translate-y-1 transition-transform duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={startNewWorkout}>Start Workout</button>
         </div>
       ) : (
-        <button onClick={() => setShowCreateWorkout(true)} style={buttonStyle}>Create Workout</button>
+        <button className="bg-pink-300 mt-2 mb-2 hover:-translate-y-1 transition-transform duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => setShowCreateWorkout(true)}>Create Workout</button>
       )}
       {currentWorkout && (
         <div style={{ marginBottom: '20px' }}>
@@ -108,12 +98,12 @@ const WorkoutComponent: React.FC = () => {
               onChange={(e) => setNewExerciseName(e.target.value)}
               style={{ marginRight: '10px' }}
             />
-            <button onClick={addExercise} style={buttonStyle}>Add Exercise</button>
+            <button className="bg-pink-300 mt-2 mb-2 hover:-translate-y-1 transition-transform duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={addExercise}>Add Exercise</button>
           </div>
           {currentWorkout.exercises.map((exercise, idx) => (
             <div key={idx} style={{ marginBottom: '10px' }}>
               <strong>{exercise.name}</strong> - {exercise.sets.length} sets recorded
-              <button onClick={() => setAddingSetToExerciseIndex(idx)} style={buttonStyle}>
+              <button className="bg-pink-300 mt-2 mb-2 ml-2 hover:-translate-y-1 transition-transform duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => setAddingSetToExerciseIndex(idx)}>
                 Add Sets
               </button>
               {addingSetToExerciseIndex === idx && (
@@ -132,13 +122,13 @@ const WorkoutComponent: React.FC = () => {
                     onChange={(e) => handleSetChange('reps', Number(e.target.value))}
                     style={{ marginRight: '10px' }}
                   />
-                  <button onClick={addSet} style={buttonStyle}>Add Set</button>
-                  <button onClick={resetAddingExercise} style={buttonStyle}>Add Another Exercise</button>
+                  <button className="bg-pink-300 mt-2 mb-2 hover:-translate-y-1 transition-transform duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={addSet}>Add Set</button>
+                  <button className="ml-2 bg-pink-300 mt-2 mb-2 hover:-translate-y-1 transition-transform duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={resetAddingExercise}>Add Another Exercise</button>
                 </div>
               )}
             </div>
           ))}
-          <button onClick={saveWorkout} style={buttonStyle}>Save Workout</button>
+          <button className="bg-pink-300 mt-2 mb-2 hover:-translate-y-1 transition-transform duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={saveWorkout}>Save Workout</button>
         </div>
       )}
       <div>
