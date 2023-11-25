@@ -50,21 +50,17 @@ const PostComponent = ({
     setVoteCount(upvotes.length - downvotes.length)
     for (let i = 0; i < upvotes.length; i++) {
       if (upvotes[i] === userId) {
-        if (!downvoted) {
           setUpvoted(true)
-        }
       }
     }
 
     for (let i = 0; i < downvotes.length; i++) {
       if (downvotes[i] === userId) {
-        if (!upvoted) {
           setDownvoted(true)
-        }
       }
     }
  
-  }, [downvoted, downvotes, upvoted, upvotes, userId])
+  }, [downvotes, upvotes, userId])
 
   const [voteCount, setVoteCount] = useState(upvotes.length - downvotes.length)
 

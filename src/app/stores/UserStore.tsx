@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { Chatbox } from '@/types/Chatbox';
 import { Community } from '@/types/Community';
 import { Instructor } from '@/types/Instructor';
 import { Post } from '@/types/Post';
@@ -21,6 +22,8 @@ type State = {
   updatePosts: (homepagePosts: State['homepagePosts']) => void;
   instructor: Instructor;
   updateInstructor:(instructor: State['instructor']) => void; 
+  chatbox: Chatbox
+  updateChatbox:(chatbox: State['chatbox']) => void; 
 };
 
 // Create your store, which includes both state and (optionally) actions
@@ -35,6 +38,12 @@ export const useGlobalStore = create<State>()(
         name: '',
         courses: []
       },
+      chatbox: {
+        chatbox_id: -1,
+        last_message: '',
+        other_user_username: ''
+      },
+      updateChatbox: (chatbox) => set(() => ({chatbox: chatbox})),
 
       updateInstructor: (instructor) => set(() => ({ instructor: instructor })),
 

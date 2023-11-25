@@ -43,12 +43,24 @@ function SearchComponent({
 }
 
 export default function Header() {
-  const [nav, toggleNav] = useState(false);
+
+
+  const globTog = useGlobalStore(state => state.toggle)
+  const [nav, toggleNav] = useState(globTog);
+
+
   const { scrollYProgress } = useScroll();
 
   const [value, setValue] = useState('');
 
-  const communities = useGlobalStore((state) => state.communities);
+  const communitiesGlob = useGlobalStore((state) => state.communities);
+  const [communities, setCommunities] = useState(communitiesGlob)
+
+  React.useEffect(() => {
+    setCommunities(communitiesGlob)
+    toggleNav(globTog)
+  }, [communitiesGlob, globTog])
+
 
   const handleChange = (value: any) => {
     setValue(value);
