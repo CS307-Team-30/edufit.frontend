@@ -20,7 +20,6 @@ export interface User {
   moderator: boolean;
   authenticationToken: string;
   exp: number;
-  waterConsumed: number;
 }
 
 export const initialUserState: User = {
@@ -44,6 +43,5 @@ export const initialUserState: User = {
   notification: [],
   moderator: false,
   authenticationToken: '',
-  exp: -1,
-  waterConsumed: 0
+  exp: -1
 };
