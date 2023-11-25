@@ -26,7 +26,7 @@ function SearchComponent({
 }) {
   return (
     <div className='mr-3 flex items-center justify-center text-2xl'>
-      <FaSearch className='mr-2' />{' '}
+      <FaSearch className='ml-3 mr-2' />{' '}
       {/* <-- This is your magnifying glass icon */}
       <input
         className='px-4'
@@ -55,8 +55,8 @@ export default function Header() {
     toggleNav(globTog);
   }, [communitiesGlob, globTog]);
 
-  const handleChange = (value: any) => {
-    setValue(value);
+  const handleChange = (value: string) => {
+    setValue(value.toUpperCase());
   };
 
   // React.useEffect(() => {
@@ -105,13 +105,13 @@ export default function Header() {
           </div>
           <div className='relative flex justify-end text-2xl'>
             <SearchComponent value={value} handleChange={handleChange} />
-            <div className='absolute left-0 top-2/3 z-50 rounded-xl bg-white text-xl font-bold'>
+            <div className='absolute left-0 top-3/4 z-50 flex w-[400px] flex-col rounded-lg bg-white text-xl font-bold'>
               {communities
                 .filter((item) => value !== '' && item.name.includes(value)) // Filter condition
                 .map((item, index) => (
                   <UnstyledLink
                     href={'/community/' + item.id}
-                    className='top-1/2 mt-4 px-4 py-2 text-black hover:bg-pink-300'
+                    className='top-1/2 mt-4 rounded-lg px-4 py-2 text-black hover:bg-pink-500'
                     key={index}
                   >
                     {item.name}
