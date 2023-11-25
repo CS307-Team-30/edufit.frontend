@@ -2,14 +2,20 @@
 import { motion, useScroll } from 'framer-motion';
 import * as React from 'react';
 import { useState } from 'react';
+import '@/styles/calendar'
 
 import UnstyledLink from '@/components/links/UnstyledLink';
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 const links = [
   { href: '/', label: 'Route 1' },
   { href: '/', label: 'Route 2' }
 ];
 
+import {faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
@@ -72,6 +78,7 @@ export default function Header() {
   // }, [user])
 
   return (
+<<<<<<< HEAD
     <div className='sticky top-0 z-30 bg-white'>
       <motion.header className='sticky top-0 z-50 min-h-[100px] border px-10 pb-6 pt-8 text-4xl shadow-md md:px-32'>
         <div className='grid grid-cols-3'>
@@ -97,6 +104,42 @@ export default function Header() {
                 {/* <h2>{user.username}</h2> */}
               </div>
             </Link>
+=======
+    <div className='sticky top-0 z-50 bg-white'>
+    <motion.header className='sticky top-0 z-50 border min-h-[100px] md:px-16 px-10 pt-8 pb-6 shadow-md text-4xl'>
+      <div className='flex flex-row justify-between space-x-0'>
+        <Toggle />
+        <Link className="mt-6" href="/calendar">
+        <div className='flex flex-col items-center mt-0'>
+          <FontAwesomeIcon icon={faCalendarAlt}/>
+          <h1 className="text-xl">Calendar</h1>
+        </div>
+        </Link>
+        <div>
+        
+        <Link href="/homepage" className='flex flex-row items-center justify-center space-x-2'>
+        <Image src="/images/logo.png" alt="logo" height={40} width={100}/>
+        <div className='flex flex-row'>
+        <h1 className='font-secondary text-5xl flex flex-row justify-center'>
+          Edu
+        </h1>
+        <h1 className='font-secondary text-pink-300 text-5xl flex flex-row justify-center'>
+          Fit
+        </h1>
+        {/* <h2>{user.username}</h2> */}
+        </div>
+        </Link>
+        </div>
+        <div className='relative flex justify-end text-2xl'>
+          <SearchComponent value={value} handleChange={handleChange} />
+          <div className='z-50 absolute left-0 top-2/3 bg-white font-bold text-xl rounded-xl'>
+              {communities
+                  .filter(item => (value !== '' && item.name.includes(value))) // Filter condition
+                  .map((item, index) => (
+                      <UnstyledLink href={"/community/" + item.id} className='top-1/2 mt-4 text-black hover:bg-pink-300 px-4 py-2' key={index}>{item.name}</UnstyledLink>
+                  ))
+              }
+>>>>>>> main
           </div>
           <div className='relative flex justify-end text-2xl'>
             <SearchComponent value={value} handleChange={handleChange} />

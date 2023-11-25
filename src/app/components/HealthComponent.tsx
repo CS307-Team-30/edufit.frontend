@@ -47,10 +47,10 @@ const HealthCalculator = () => {
       <div style={{ border: '2px solid pink', padding: '20px', margin: '10px' }}>
         <h2>BMI Calculator</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <input type="text" placeholder="Height (ft)" onChange={(e) => setHeightFeet(e.target.value)} />
-          <input type="text" placeholder="Height (in)" onChange={(e) => setHeightInches(e.target.value)} />
-          <input type="text" placeholder="Weight (lbs)" onChange={(e) => setWeight(e.target.value)} />
-          <button style={{ backgroundColor: 'pink', border: '2px solid pink', padding: '10px 15px', cursor: 'pointer' }} onClick={calculateBMI}>Calculate BMI</button>
+          <input className="bg-pink-100 border border-gray-300 rounded-md p-2" type="text" placeholder="Height (ft)" onChange={(e) => setHeightFeet(e.target.value)} />
+          <input className="bg-pink-100 border border-gray-300 rounded-md p-2" type="text" placeholder="Height (in)" onChange={(e) => setHeightInches(e.target.value)} />
+          <input className="bg-pink-100 border border-gray-300 rounded-md p-2" type="text" placeholder="Weight (lbs)" onChange={(e) => setWeight(e.target.value)} />
+          <button className="bg-pink-300 mt-2 mb-2 hover:-translate-y-1 transition-transform duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={calculateBMI}>Calculate BMI</button>
           {bmi && <p>Your BMI: {bmi.toFixed(2)}</p>}
         </div>
         <div style={{ border: '2px solid pink', padding: '10px', margin: '10px' }}>
@@ -63,18 +63,18 @@ const HealthCalculator = () => {
       </div>
       
       <div style={{ border: '2px solid pink', padding: '20px', margin: '10px' }}>
-        <h2>Metabolic Rate Calculator</h2>
+        <h2>BMR Calculator</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <input type="text" placeholder="Age" onChange={(e) => setAge(e.target.value)} />
-          <select onChange={(e) => setGender(e.target.value)}>
+          <input className="bg-pink-100 border border-gray-300 rounded-md p-2" type="text" placeholder="Age" onChange={(e) => setAge(e.target.value)} />
+          <select className="bg-pink-100 border border-gray-300 rounded-md p-2" type="text" placeholder="Height (ft)" onChange={(e) => setGender(e.target.value)}>
             <option value="">Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
-          <input type="text" placeholder="Height (ft)" onChange={(e) => setHeightFeet(e.target.value)} />
-          <input type="text" placeholder="Height (in)" onChange={(e) => setHeightInches(e.target.value)} />
-          <input type="text" placeholder="Weight (lbs)" onChange={(e) => setWeight(e.target.value)} />
-          <button style={{ backgroundColor: 'pink', border: '2px solid pink', padding: '10px 15px', cursor: 'pointer' }} onClick={calculateBMR}>Calculate BMR</button>
+          <input className="bg-pink-100 border border-gray-300 rounded-md p-2" type="text" placeholder="Height (ft)" onChange={(e) => setHeightFeet(e.target.value)} />
+          <input className="bg-pink-100 border border-gray-300 rounded-md p-2" type="text" placeholder="Height (in)" onChange={(e) => setHeightInches(e.target.value)} />
+          <input className="bg-pink-100 border border-gray-300 rounded-md p-2" type="text" placeholder="Weight (lbs)" onChange={(e) => setWeight(e.target.value)} />
+          <button className="bg-pink-300 mt-2 mb-2 hover:-translate-y-1 transition-transform duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={calculateBMR}>Calculate BMR</button>
           {bmr && (
             <div>
               <p>Your BMR: {bmr.toFixed(2)} calories/day</p>
