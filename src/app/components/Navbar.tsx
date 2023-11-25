@@ -2,10 +2,9 @@
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion, useScroll } from 'framer-motion';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import * as React from 'react';
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
@@ -73,7 +72,7 @@ export default function Header() {
 
   useEffect(() => {
     // Fetch the image URL from the server
-    fetch('http://localhost:8000/images/' + profile_pic)  // Replace with the actual endpoint URL
+    fetch('http://localhost:8000/images/' + profile_pic) // Replace with the actual endpoint URL
       .then((response) => {
         if (response.ok) {
           return response.url;
@@ -93,6 +92,15 @@ export default function Header() {
       <motion.header className='sticky top-0 z-50 min-h-[100px] border px-10 pb-6 pt-8 text-4xl shadow-md md:px-32'>
         <div className='grid grid-cols-3'>
           <div className='flex flex-row items-start space-x-8'>
+            <Link className='rounded-full' href='/profile'>
+              <img
+                className='h-[80px] w-[80px] rounded-full'
+                src={imageURL}
+                alt='user icon'
+                width={80}
+                height={80}
+              />
+            </Link>
             <Toggle />
             <Link className='mt-6' href='/calendar'>
               <div className='mt-0 flex flex-col items-center text-pink-400'>
@@ -142,10 +150,6 @@ export default function Header() {
                   </UnstyledLink>
                 ))}
             </div>
-            </div>
-            <Link className='rounded-full' href="/profile">
-              <img className='rounded-full h-[80px] w-[80px]' src={imageURL} alt="user icon" width={80} height={80} />
-            </Link>
           </div>
         </div>
       </motion.header>
