@@ -103,13 +103,13 @@ export default function Header() {
             </Link>
             <Toggle />
             <Link className='mt-6' href='/calendar'>
-              <div className='mt-0 flex flex-col items-center text-pink-400'>
+              <div className='mt-0 flex flex-col items-center text-pink-400 hover:text-pink-600'>
                 <FontAwesomeIcon icon={faCalendarAlt} />
                 <h1 className='text-xl'>Calendar</h1>
               </div>
             </Link>
             <UnstyledLink className='mt-6 text-5xl' href='/messages'>
-              <MdOutlineMessage className='text-pink-400' />
+              <MdOutlineMessage className='text-pink-400 hover:text-pink-600' />
             </UnstyledLink>
           </div>
 
