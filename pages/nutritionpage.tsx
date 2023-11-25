@@ -5,6 +5,7 @@ import OneRepMaxCalculator from '@/app/components/1rm';
 import FitnessLayout from '@/app/components/FitnessLayout';
 import HealthCalculator from '@/app/components/HealthComponent';
 import Hydration from '@/app/components/Hydration';
+import ComponentsLayout from '@/app/components/layout';
 import Meals from '@/app/components/Meals';
 import GoalMilestoneInput from '@/app/components/MileStone';
 import Preset from '@/app/components/Preset';
@@ -17,6 +18,7 @@ export default function NutritionPage() {
     <FitnessLayout>
         <Meals />
         <Hydration />
+
         <WorkoutComponent />
         <Preset />
         <HealthCalculator />

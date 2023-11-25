@@ -2,6 +2,8 @@
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion, useScroll } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import * as React from 'react';
@@ -17,6 +19,7 @@ import { useGlobalStore } from '@/app/stores/UserStore';
 // import { RootState } from '@/types/types';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
+
 function SearchComponent({
   value,
   handleChange
@@ -63,6 +66,27 @@ export default function Header() {
   //   console.log(user)
 
   // }, [user])
+
+  const [imageURL, setImageURL] = useState('');
+  const profile = useGlobalStore((state) => state.profile);
+  const profile_pic = profile.profile_pic;
+
+  useEffect(() => {
+    // Fetch the image URL from the server
+    fetch('http://localhost:8000/images/' + profile_pic)  // Replace with the actual endpoint URL
+      .then((response) => {
+        if (response.ok) {
+          return response.url;
+        }
+        throw new Error('Failed to fetch image.');
+      })
+      .then((url) => {
+        setImageURL(url);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <div className='sticky top-0 z-30 bg-white'>
@@ -118,14 +142,9 @@ export default function Header() {
                   </UnstyledLink>
                 ))}
             </div>
-            <Link className='rounded-full' href='/user'>
-              <Image
-                className='h-[80px] w-[80px] rounded-full'
-                src='/images/user_icon.jpg'
-                alt='user icon'
-                width={80}
-                height={80}
-              />
+            </div>
+            <Link className='rounded-full' href="/profile">
+              <img className='rounded-full h-[80px] w-[80px]' src={imageURL} alt="user icon" width={80} height={80} />
             </Link>
           </div>
         </div>

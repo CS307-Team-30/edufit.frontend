@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ErrorMessage,Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { jwtDecode } from 'jwt-decode'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 
 import { useGlobalStore } from '@/app/stores/UserStore';
 
-import {User } from '@/types/User';
+import { User } from '@/types/User';
 
 // Define the validation schema using Yup
 const validationSchema = Yup.object({
@@ -30,7 +30,7 @@ type ErrorMessageComponentProps = {
 }
 
 
-const ErrorMessageComponent = ({children}: ErrorMessageComponentProps) => {
+const ErrorMessageComponent = ({ children }: ErrorMessageComponentProps) => {
   return (
     <div className="absolute font-primary text-sm text-red-600 -translate-y-5">
       {children}
@@ -49,8 +49,10 @@ const RegistrationFormComponent: React.FC = () => {
 
   const router = useRouter()
   const user = useGlobalStore((state) => state.user)
+  const profile = useGlobalStore((state) => state.profile)
   const updateUser = useGlobalStore((state) => state.updateUser)
-  
+  const updateProfile = useGlobalStore((state) => state.updateProfile)
+
 
   const handleSubmit = async (values: FormValues) => {
     // console.log(values)
@@ -61,8 +63,18 @@ const RegistrationFormComponent: React.FC = () => {
       const responseToken: string = response.data.token
       const decodedToken: User = jwtDecode(responseToken)
 
-      updateUser({...user, ...decodedToken, authenticationToken: responseToken})
- 
+      updateUser({ ...user, ...decodedToken, authenticationToken: responseToken })
+
+      const profile = await axios.get("http://localhost:8000/get-profile/" + decodedToken.id)
+      updateProfile(
+        {
+          user_id: profile.data.user_id,
+          nickname: profile.data.nickname,
+          bio: profile.data.bio,
+          profile_pic: profile.data.profile_pic
+        }
+      )
+
       router.push('/homepage');
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -73,16 +85,14 @@ const RegistrationFormComponent: React.FC = () => {
     }
   };
 
-
-
   return (
-  <div className="bg-white mx-40 text-black font-bebas flex items-center justify-center h-screen"> 
+    <div className="bg-white mx-40 text-black font-bebas flex items-center justify-center h-screen">
       <div className='bg-amber-300'>
 
       </div>
       <div className="text-2xl flex flex-col pr-20 pl-20 my-20">
         <div className='w-full flex flex-col items-center justify-center'>
-          <Image src="/images/logo.png" alt="logo" height={100} width={100}/>
+          <Image src="/images/logo.png" alt="logo" height={100} width={100} />
           <h1 id="header" className='w-full text-black flex flex-row justify-center text-5xl mb-20'>Edu<span className='text-pink-300'>Fit</span></h1>
         </div>
         <Formik
@@ -129,10 +139,10 @@ const RegistrationFormComponent: React.FC = () => {
         </Formik>
 
 
-    </div>
-
-
       </div>
+
+
+    </div>
 
   );
 };

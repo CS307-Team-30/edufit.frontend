@@ -1,11 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { Comment } from '@/types/Comment';
 import { Chatbox } from '@/types/Chatbox';
 import { Community } from '@/types/Community';
 import { Instructor } from '@/types/Instructor';
 import { Post } from '@/types/Post';
 import { initialUserState, User } from '@/types/User';
+import { initialProfileState, Profile } from '@/types/Profile';
 
 type State = {
   user: User;
@@ -17,8 +19,10 @@ type State = {
   addCommentsModal: number;
   setAddCommentsModal: (addCommentsModal: State['addCommentsModal']) => void;
   setToggle: (toggle: State['toggle']) => void;
+  profile: Profile;
   updateUser: (user: State['user']) => void;
   update: (communities: State['communities']) => void;
+  updateProfile: (profile: State['profile']) => void;
   updatePosts: (homepagePosts: State['homepagePosts']) => void;
   instructor: Instructor;
   updateInstructor:(instructor: State['instructor']) => void; 
@@ -31,6 +35,9 @@ export const useGlobalStore = create<State>()(
   persist(
     (set) => ({
       user: initialUserState,
+      profile: initialProfileState,
+      updateProfile: (profile) =>
+        set(() => ({ profile: profile })),
       instructor: {
         id: -1,
         bio: '',
@@ -66,3 +73,4 @@ export const useGlobalStore = create<State>()(
     { name: 'global', getStorage: () => localStorage }
   )
 );
+

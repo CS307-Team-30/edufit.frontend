@@ -7,7 +7,7 @@ import { PrivacySettings } from '@/types/PrivacySettings';
 import { WorkoutPlan } from '@/types/WorkoutPlan';
 
 export interface User {
-  id: number;
+  id: string;
   username: string;
   email: string;
   meals: Array<Meal>;
@@ -23,7 +23,7 @@ export interface User {
 }
 
 export const initialUserState: User = {
-  id: -1,
+  id: '',
   username: '',
   email: '',
   meals: [],
