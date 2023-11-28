@@ -9,8 +9,11 @@ const PresetWorkoutsComponent: React.FC = () => {
   const [selectedWorkout, setSelectedWorkout] = useState<Workout | null>(null);
   const [editableWorkout, setEditableWorkout] = useState<Workout | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+ 
 
-  const initialWorkouts = [
+
+
+  const [initialWorkouts,setInitialWorkouts] = useState<Workout[]> ([
     {
       name: 'Push',
       exercises: [
@@ -42,8 +45,19 @@ const PresetWorkoutsComponent: React.FC = () => {
         { name: 'Calf Raises', sets: Array(3).fill({ weight: undefined, reps: 12 }) },
       ]
     }
-  ];
-  
+  ]);
+
+    
+  const buttonStyle = {
+    padding: '10px 20px',
+    margin: '5px',
+    border: '1px solid #ddd',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    backgroundColor: '#f0f0f0',
+  };
+
+
   const cardStyle = {
     cursor: 'pointer',
     border: '1px solid gray',
@@ -55,17 +69,7 @@ const PresetWorkoutsComponent: React.FC = () => {
     textAlign: 'center',
   };
 
-  
-  const buttonStyle = {
-    padding: '10px 20px',
-    margin: '5px',
-    border: '1px solid #ddd',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    backgroundColor: '#f0f0f0',
-  };
 
- 
 
   const handleWorkoutSelect = (workoutName: string) => {
     const workout = initialWorkouts.find(w => w.name === workoutName);
@@ -79,10 +83,23 @@ const PresetWorkoutsComponent: React.FC = () => {
     setIsEditing(!isEditing);
   };
 
+  const updateWorkoutInBackend = (updatedWorkout: Workout) => {
+    // Replace this with your backend update logic
+    console.log('Updated workout:', updatedWorkout);
+
+    // Updating the initialWorkouts array with the updated workout
+    setInitialWorkouts(prevWorkouts => 
+      prevWorkouts.map(workout => 
+        workout.name === updatedWorkout.name ? updatedWorkout : workout
+      )
+    );
+  };
+
   const handleSave = () => {
-    if (isEditing) {
+    if (isEditing && editableWorkout) {
       setSelectedWorkout(editableWorkout);
       setIsEditing(false);
+      updateWorkoutInBackend(editableWorkout);
     }
   };
 
@@ -91,18 +108,26 @@ const PresetWorkoutsComponent: React.FC = () => {
       const updatedSets = Array(newSetCount).fill({ ...editableWorkout.exercises[exerciseIndex].sets[0] });
       const updatedExercises = [...editableWorkout.exercises];
       updatedExercises[exerciseIndex].sets = updatedSets;
-      setEditableWorkout({ ...editableWorkout, exercises: updatedExercises });
+      const updatedWorkout = { ...editableWorkout, exercises: updatedExercises };
+      setEditableWorkout(updatedWorkout);
+  
+      // Print the updated editable workout
+      console.log('Updated editable workout:', updatedWorkout);
     }
   };
-
+  
   const handleSetRepsChange = (exerciseIndex: number, newReps: number) => {
     if (editableWorkout && newReps >= 0) {
       const updatedExercises = [...editableWorkout.exercises];
       updatedExercises[exerciseIndex].sets = updatedExercises[exerciseIndex].sets.map(set => ({ ...set, reps: Math.max(0, newReps) }));
-      setEditableWorkout({ ...editableWorkout, exercises: updatedExercises });
+      const updatedWorkout = { ...editableWorkout, exercises: updatedExercises };
+      setEditableWorkout(updatedWorkout);
+  
+      // Print the updated editable workout
+      console.log('Updated editable workout:', updatedWorkout);
     }
   };
-
+  
   return (
     <div>
       <h2>Preset Workouts</h2>
@@ -110,7 +135,6 @@ const PresetWorkoutsComponent: React.FC = () => {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {initialWorkouts.map((workout, index) => (
             <div key={index} onClick={() => handleWorkoutSelect(workout.name)} style={cardStyle}>
-              {/* Replace with actual image URLs */}
               <img src={`path_to_${workout.name.toLowerCase()}_image.jpg`} alt={`${workout.name} Workout`} style={{ width: '100%', height: 'auto' }} />
               <p>{workout.name}</p>
             </div>
@@ -170,4 +194,5 @@ export default PresetWorkoutsComponent;
 
 
 
+  
 
