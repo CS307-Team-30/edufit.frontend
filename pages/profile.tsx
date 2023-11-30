@@ -28,6 +28,9 @@ export default function Profile() {
       <div className='mt-12 min-h-[500px] bg-white px-12 pt-20 md:mx-40'>
         <PasswordConfirmationForm />
       </div>
+      <div className='mt-12 min-h-[500px] bg-white px-12 pt-20 md:mx-40'>
+        <a href="/deletion">Delete Account</a>
+      </div>
     </ComponentsLayout>
   );
 }
