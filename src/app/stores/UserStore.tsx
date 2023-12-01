@@ -1,16 +1,16 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { Comment } from '@/types/Comment';
 import { Chatbox } from '@/types/Chatbox';
 import { Community } from '@/types/Community';
 import { Instructor } from '@/types/Instructor';
 import { Post } from '@/types/Post';
-import { initialUserState, User } from '@/types/User';
 import { initialProfileState, Profile } from '@/types/Profile';
+import { initialUserState, User } from '@/types/User';
 
 type State = {
   user: User;
+  
   toggle: boolean;
   communities: Array<Community>;
   homepagePosts: Array<Post>;

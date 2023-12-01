@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import 'src/styles/profile.css';
+// import 'src/styles/profile.css';
 
 interface UserProfileData {
   nickname: string;

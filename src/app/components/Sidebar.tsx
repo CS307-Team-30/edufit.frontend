@@ -6,7 +6,7 @@ import { useGlobalStore } from '@/app/stores/UserStore';
 export default function Sidebar() {
   const links = useGlobalStore((state) => state.user.communities);
   return (
-    <div className=' min-h-screen w-[300px] bg-pink-400 px-4 py-4 text-white'>
+    <div className='flex flex-col min-h-screen w-[300px] bg-pink-400 px-4 py-4 text-white'>
       <h4>Subscribed Communities</h4>
       {links.map((community, id) => (
         <button
