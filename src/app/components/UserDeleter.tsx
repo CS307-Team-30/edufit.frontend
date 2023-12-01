@@ -2,13 +2,12 @@ import axios from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import React, { useState } from 'react';
 import * as Yup from 'yup';
 
 import { useGlobalStore } from '@/app/stores/UserStore';
 
-import { User, initialUserState } from '@/types/User';
-import { Profile, initialProfileState } from '@/types/Profile';
+import { initialProfileState,Profile } from '@/types/Profile';
+import { initialUserState,User } from '@/types/User';
 
 // Define the validation schema using Yup
 const validationSchema = Yup.object({
