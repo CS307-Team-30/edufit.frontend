@@ -122,7 +122,7 @@ const RegistrationFormComponent: React.FC = () => {
             </button>
 
             {errorMessage && (
-              <div className="error-modal justify-center">
+              <div className="error-modal justify-center text-white">
                 <h3>{errorMessage}</h3>
               </div>
             )}
