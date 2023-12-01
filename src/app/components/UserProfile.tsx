@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+
+import 'src/styles/profile.css';
 
 interface UserProfileData {
   nickname: string;
@@ -15,7 +15,7 @@ function UserProfile(data: UserProfileData) {
 
   useEffect(() => {
     // Fetch the image URL from the server
-    fetch('http://localhost:8000/images/' + profile_pic)  // Replace with the actual endpoint URL
+    fetch('http://localhost:8000/images/' + profile_pic) // Replace with the actual endpoint URL
       .then((response) => {
         if (response.ok) {
           return response.url;
@@ -31,13 +31,24 @@ function UserProfile(data: UserProfileData) {
   }, []);
 
   return (
-    <div className="user-profile">
-      <div className="profile-picture">
-        <img src={imageURL} alt={`${nickname}'s profile`} />
+    <div className="user-profile flex items-center justify-center flex-col space-y-4">
+      <div className="profile-picture rounded-full w-64 h-64 overflow-hidden border-4 border-white">
+      <img
+        className="w-full h-full object-cover"
+        src="/images/mh-3-23-coleman-1648059910.png"
+        alt={`${nickname}'s profile`}
+      />
+
       </div>
-      <div className="user-info">
-        <h2>{nickname}</h2>
-        <p>{bio}</p>
+      <div className="user-info text-center">
+        <main className='container'>
+          <section className="animation">
+            <div className="first"><div>{nickname}</div></div>
+            <div className="second"><div>Educated</div></div>
+            <div className="third"><div>Physically fit</div></div>
+          </section>
+        </main>
+        <p className='text-white'>{bio}</p>
       </div>
     </div>
   );

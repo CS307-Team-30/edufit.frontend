@@ -72,7 +72,7 @@ const RegistrationFormComponent: React.FC = () => {
   };
 
   return (
-    <div className="bg-white mx-40 text-black font-bebas flex items-center justify-center h-screen">
+    <div className="mx-40 text-black font-bebas flex items-center justify-center h-screen">
       <div className='bg-amber-300'>
 
       </div>
