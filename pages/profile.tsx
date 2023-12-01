@@ -6,6 +6,7 @@ import '../src/styles/globals.css';
 import ImageUpload from '@/app/components/FileUpload';
 import ComponentsLayout from '@/app/components/layout';
 import PasswordConfirmationForm from '@/app/components/PasswordConfirm';
+import UserDeleter from '@/app/components/UserDeleter';
 import UserProfile from '@/app/components/UserProfile';
 import { useGlobalStore } from '@/app/stores/UserStore';
 
@@ -60,7 +61,7 @@ export default function Profile() {
       <div className='mt-12 min-h-[500px] px-12 pt-20 md:mx-40'>
         {activeTab === 'image-upload' && <ImageUpload />}
         {activeTab === 'password-confirmation' && <PasswordConfirmationForm />}
-        {activeTab === 'deletion' && <div>Delete Account content goes here.</div>}
+        {activeTab === 'deletion' && <div><UserDeleter/></div>}
       </div>
     </ComponentsLayout>
   );
