@@ -24,6 +24,10 @@ const MessageModal = () => {
 
 
     fetchMessages()
+    const intervalId = setInterval(fetchMessages, 1000);
+
+    // Clear interval on component unmount
+    return () => clearInterval(intervalId);
 
   }, [chatbox.chatbox_id])
 
@@ -41,7 +45,7 @@ const MessageModal = () => {
   }, [messages.length]);
 
   const sendMessage = () => {
-    setMessages([...messages, {content: newMessage}])
+    setMessages([...messages, {content: user.username + ': ' +  newMessage}])
     if (newMessage.trim()) {
       socket.emit('send_message', {
         user_id: user.id,

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { BiDownvote, BiUpvote } from 'react-icons/bi';
 
 type Comment = {
   id: number;
@@ -39,11 +38,6 @@ const CommentsListComponent: React.FC<CommentsListComponentProps> = ({ postId })
       {comments.map((comment) => (
         <div key={comment.id} className="comment pt-2">
             <div className='mt-4 space-x-4 flex flex-row items-center text-xl text-pink-600'>
-              <div className='flex flex-row space-x-1'>
-                <BiUpvote className='hover:cursor-pointer' />
-                <div className='mx-2 text-sm font-bold'>{0}</div>
-                <BiDownvote className='hover:cursor-pointer' />
-              </div>
               <h4>{comment.username}</h4>
           </div>
           <p className='text-pink-700 mt-2'>{comment.content}</p>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import React, { useState } from 'react';
 
 import { useGlobalStore } from '@/app/stores/UserStore';
 
@@ -45,6 +46,7 @@ const RegistrationFormComponent: React.FC = () => {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
+        console.error('Change password failed:', error.response?.data);
         console.error('Change password failed:', error.response?.data);
       } else {
         console.error('An unexpected error occurred:', error);
@@ -108,6 +110,7 @@ const RegistrationFormComponent: React.FC = () => {
           </form>
         </div>
       </div>
+    </section>
     </section>
   );
 };

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {
   CartesianGrid,
@@ -10,6 +11,8 @@ import {
   YAxis,
 } from 'recharts';
 
+import { useGlobalStore } from '@/app/stores/UserStore';
+
 const WeightTracker = () => {
   const [weights, setWeights] = useState<{ date: string; weight: number }[]>(
     []
@@ -17,11 +20,38 @@ const WeightTracker = () => {
   const [currentWeight, setCurrentWeight] = useState('');
   const [targetWeight, setTargetWeight] = useState('');
 
+  const userId = useGlobalStore(state => state.user.id)
+
+  useEffect(() => {
+    const fetchWeights = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/user/${userId}/weights`);
+        console.log(response)
+        setWeights(response.data);
+      } catch (error) {
+        console.error('Error fetching weight data:', error);
+      }
+    };
+  
+    fetchWeights();
+  }, [userId]);
+
   const handleWeightSubmit = () => {
     const newWeightEntry = {
       date: new Date().toLocaleDateString(),
       weight: parseFloat(currentWeight),
     };
+
+    axios.post(`http://localhost:8000/user/${userId}/weight`, newWeightEntry)
+    .then(response => {
+      const data = response.data;
+      if (data.success) {
+        setWeights(prevWeights => [...prevWeights, newWeightEntry]);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
     setWeights([...weights, newWeightEntry]);
     setCurrentWeight('');
   };
