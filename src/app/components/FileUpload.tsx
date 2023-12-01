@@ -2,16 +2,18 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 import { useGlobalStore } from '@/app/stores/UserStore';
+import axios from 'axios';
 
 function ImageUpload() {
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const user = useGlobalStore((state) => state.user);
   const profile = useGlobalStore((state) => state.profile);
   const router = useRouter();
 
   const updateProfile = useGlobalStore((state) => state.updateProfile);
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
     const fileName = file ? file.name : '';
     setSelectedFile(file);
@@ -22,6 +24,14 @@ function ImageUpload() {
       bio: profile.bio,
       profile_pic: fileName,
     });
+
+    const response = await axios.post(
+      'http://localhost:8000/update-profile-pic',
+      {
+        token: user.authenticationToken,
+        new_pic: fileName
+      }
+    );
   };
 
   const handleSubmit = (event) => {
