@@ -1,93 +1,27 @@
-import { Menu, Transition } from '@headlessui/react'
-import { DotsVerticalIcon } from '@heroicons/react/outline'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
+import { Menu } from '@headlessui/react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import {
   add,
-eachDayOfInterval,
-endOfMonth,
-format,
-getDay,
-isEqual,
-isSameDay,
-isSameMonth,
-isToday,
-parse,
-parseISO,
-startOfToday,
-} from 'date-fns'
-import { Fragment, useState } from 'react'
+  eachDayOfInterval,
+  endOfMonth,
+  format,
+  getDay,
+  isEqual,
+  isSameDay,
+  isSameMonth,
+  isToday,
+  parse,
+  parseISO,
+  startOfToday,
+} from 'date-fns';
+import React, { useState } from 'react';
 
-import "../src/styles/colors.css"
-import "../src/styles/globals.css"
+import "../src/styles/colors.css";
+import "../src/styles/globals.css";
 
-const meetings = [
-  {
-    id: 1,
-    name: 'Turkstras ex wife who dumped his ass',
-    imageUrl:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-05-11T13:00',
-    endDatetime: '2022-05-11T14:30',
-  }, 
-  {
-    id: 1,
-    name: 'Turkstras ex wife who dumped his ass',
-    imageUrl:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-05-12T13:00',
-    endDatetime: '2022-05-12T14:30',
-  },
-  {
-    id: 1,
-    name: 'Turkstras ex wife who dumped his ass',
-    imageUrl:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-05-13T13:00',
-    endDatetime: '2022-05-13T14:30',
-  },{
-    id: 1,
-    name: 'Turkstras ex wife who dumped his ass',
-    imageUrl:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-05-14T13:00',
-    endDatetime: '2022-05-14T14:30',
-  },{
-    id: 1,
-    name: 'Turkstras ex wife who dumped his ass',
-    imageUrl:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-05-15T13:00',
-    endDatetime: '2022-05-15T14:30',
-  },{
-    id: 1,
-    name: 'Turkstras ex wife who dumped his ass',
-    imageUrl:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-05-10T13:00',
-    endDatetime: '2022-05-10T14:30',
-  },{
-    id: 1,
-    name: 'Turkstras ex wife who dumped his ass',
-    imageUrl:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-05-9T13:00',
-    endDatetime: '2022-05-9T14:30',
-  },{
-    id: 1,
-    name: 'Turkstras ex wife who dumped his ass',
-    imageUrl:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-05-8T13:00',
-    endDatetime: '2022-05-8T14:30',
-  },{
-    id: 1,
-    name: 'Turkstras ex wife who dumped his ass',
-    imageUrl:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-05-7T13:00',
-    endDatetime: '2022-05-7T14:30',
-  }
-]
+let meetings = [
+  // ... (Your existing meetings data)
+];
 
 const colStartClasses = [
   '',
@@ -97,36 +31,120 @@ const colStartClasses = [
   'col-start-5',
   'col-start-6',
   'col-start-7',
-]
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
 
+function CreateEventForm({ onSubmit }) {
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ description, date });
+    setDescription('');
+    setDate('');
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Event Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+      />
+      <button type="submit">Add Event</button>
+    </form>
+  );
+}
+
+function Meeting({ meeting }) {
+  return (
+    <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
+      <img
+        src={meeting.imageUrl}
+        alt=""
+        className="flex-none w-10 h-10 rounded-full"
+      />
+      <div className="flex-auto">
+        <p className="text-gray-900">{meeting.name}</p>
+      </div>
+      <Menu
+        as="div"
+        className="relative opacity-0 focus-within:opacity-100 group-hover:opacity-100"
+      >
+        {/* ... existing menu code ... */}
+      </Menu>
+    </li>
+  );
+}
+
+const styles = {
+  addButton: {
+    backgroundColor: 'pink', // Changed to pink color
+    color: 'white',
+    padding: '10px 15px',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    position: 'fixed', // Changed to fixed to move to the right
+    right: '10px', // Positioned to the right
+    top: '10px', // Positioned at the top
+  },
+  addButtonHover: {
+    backgroundColor: '#ff85a2', // Lighter pink on hover
+  },
+};
+
 export default function Example() {
-  const today = startOfToday()
-  const [selectedDay, setSelectedDay] = useState(today)
-  const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
-  const firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
-  
+  const today = startOfToday();
+  const [selectedDay, setSelectedDay] = useState(today);
+  const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
+  const [showCreateEventForm, setShowCreateEventForm] = useState(false);
+  const [hovered, setHovered] = useState(false);
+
+  const firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
+
   const days = eachDayOfInterval({
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
-  })
-
-  function previousMonth() {
-    const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 })
-    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
-  }
-  
-  function nextMonth() {
-    const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
-    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
-  }
+  });
 
   const selectedDayMeetings = meetings.filter((meeting) =>
     isSameDay(parseISO(meeting.startDatetime), selectedDay)
-  )
+  );
+
+  function previousMonth() {
+    const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
+    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
+  }
+
+  function nextMonth() {
+    const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
+  }
+
+  const addNewEvent = ({ description, date }) => {
+    const newEvent = {
+      id: meetings.length + 1,
+      name: description,
+      imageUrl: 'https://via.placeholder.com/256',
+      startDatetime: date,
+      endDatetime: date,
+    };
+    meetings = [...meetings, newEvent];
+    setShowCreateEventForm(false); // Hide form after submission
+  };
 
   return (
     <div className="pt-16">
@@ -218,7 +236,7 @@ export default function Example() {
             <h2 className="font-semibold text-gray-900">
               Schedule for{' '}
               <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
-                {format(selectedDay, 'MMM dd, yyy')}
+                {format(selectedDay, 'MMM dd, yyyy')}
               </time>
             </h2>
             <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
@@ -233,85 +251,16 @@ export default function Example() {
           </section>
         </div>
       </div>
-    </div>
-  )
-}
 
-function Meeting({ meeting }) {
-  const startDateTime = parseISO(meeting.startDatetime)
-  const endDateTime = parseISO(meeting.endDatetime)
-
-  return (
-    <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
-      <img
-        src={meeting.imageUrl}
-        alt=""
-        className="flex-none w-10 h-10 rounded-full"
-      />
-      <div className="flex-auto">
-        <p className="text-gray-900">{meeting.name}</p>
-        <p className="mt-0.5">
-          <time dateTime={meeting.startDatetime}>
-            {format(startDateTime, 'h:mm a')}
-          </time>{' '}
-          -{' '}
-          <time dateTime={meeting.endDatetime}>
-            {format(endDateTime, 'h:mm a')}
-          </time>
-        </p>
-      </div>
-      <Menu
-        as="div"
-        className="relative opacity-0 focus-within:opacity-100 group-hover:opacity-100"
+      <button
+        onClick={() => setShowCreateEventForm(true)}
+        style={hovered ? {...styles.addButton, ...styles.addButtonHover} : styles.addButton}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       >
-        <div>
-          <Menu.Button className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
-            <span className="sr-only">Open options</span>
-            <DotsVerticalIcon className="w-6 h-6" aria-hidden="true" />
-          </Menu.Button>
-        </div>
-
-        <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
-          <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-36 ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="py-1">
-              <Menu.Item>
-                {({ active }) => (
-                  <a
-                    href="#"
-                    className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block px-4 py-2 text-sm'
-                    )}
-                  >
-                    Edit
-                  </a>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <a
-                    href="#"
-                    className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block px-4 py-2 text-sm'
-                    )}
-                  >
-                    Cancel
-                  </a>
-                )}
-              </Menu.Item>
-            </div>
-          </Menu.Items>
-        </Transition>
-      </Menu>
-    </li>
-  )
+        Add New Event
+      </button>
+      {showCreateEventForm && <CreateEventForm onSubmit={addNewEvent} />}
+    </div>
+  );
 }
