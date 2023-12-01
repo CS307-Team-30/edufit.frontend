@@ -30,7 +30,7 @@ const PostComponent = ({
   id
 }: PostComponentProps) => {
   const username = useGlobalStore((state) => state.user.username);
-  const user = useGlobalStore(state=> state.user);
+  const user = useGlobalStore(state => state.user);
   const userId = user.id
 
 
@@ -50,16 +50,16 @@ const PostComponent = ({
     setVoteCount(upvotes.length - downvotes.length)
     for (let i = 0; i < upvotes.length; i++) {
       if (upvotes[i] === userId) {
-          setUpvoted(true)
+        setUpvoted(true)
       }
     }
 
     for (let i = 0; i < downvotes.length; i++) {
       if (downvotes[i] === userId) {
-          setDownvoted(true)
+        setDownvoted(true)
       }
     }
- 
+
   }, [downvotes, upvotes, userId])
 
   const [voteCount, setVoteCount] = useState(upvotes.length - downvotes.length)
@@ -140,6 +140,18 @@ const PostComponent = ({
     console.log(response);
   };
 
+  const handleReport = async () => {
+    const response = await axios.post(
+      'http://localhost:8000/report-post',
+      {
+        authToken: user.authenticationToken,
+        post_id: id,
+        reason: "Inappropriate content"
+      }
+    );
+    console.log(response);
+  };
+
   const [currId, setCurrId] = useState(-1);
 
   return (
@@ -166,19 +178,24 @@ const PostComponent = ({
               <div className='absolute top-4 rounded border'>
                 <div
                   onClick={handleDelete}
-                  className={` rounded bg-white px-4 py-2 hover:bg-pink-300 ${
-                    !displayOptions || currId != id ? 'hidden' : ''
-                  }`}
+                  className={` rounded bg-white px-4 py-2 hover:bg-pink-300 ${!displayOptions || currId != id ? 'hidden' : ''
+                    }`}
                 >
                   Delete
                 </div>
                 <div
                   onClick={handleEdit}
-                  className={` rounded bg-white px-4 py-2 hover:bg-pink-300 ${
-                    !displayOptions || currId != id ? 'hidden' : ''
-                  }`}
+                  className={` rounded bg-white px-4 py-2 hover:bg-pink-300 ${!displayOptions || currId != id ? 'hidden' : ''
+                    }`}
                 >
                   Edit
+                </div>
+                <div
+                  onClick={handleReport}
+                  className={` rounded bg-white px-4 py-2 hover:bg-pink-300 ${!displayOptions || currId != id ? 'hidden' : ''
+                    }`}
+                >
+                  Report
                 </div>
               </div>
             </div>
