@@ -20,11 +20,9 @@ function UserProfile(data: UserProfileData) {
         if (response.ok) {
           return response.url;
         }
-
         throw new Error('Failed to fetch image.');
       })
       .then((url) => {
-        console.log(url);
         setImageURL(url);
       })
       .catch((error) => {

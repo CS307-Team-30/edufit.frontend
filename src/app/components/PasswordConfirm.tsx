@@ -3,7 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { jwtDecode } from 'jwt-decode'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 
 import { useGlobalStore } from '@/app/stores/UserStore';
@@ -46,6 +46,16 @@ const RegistrationFormComponent: React.FC = () => {
   const user = useGlobalStore((state) => state.user)
   const authtoken = useGlobalStore(state => state.user.authenticationToken)
 
+  // State to control the visibility of the error message
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  // Function to show the error message
+  const showError = (message) => {
+    setErrorMessage(message);
+  };
+
+  var result_message = "Confirm your password before changing it."
+
   const handleSubmit = async (values: FormValues) => {
     // console.log(values)
     try {
@@ -57,8 +67,12 @@ const RegistrationFormComponent: React.FC = () => {
         });
 
       if (response.data.error) {
+        result_message = response.data.error
+        showError("Error: " + result_message)
         console.log("Error: " + response.data.error)
       } else if (response.data.msg) {
+        result_message = response.data.msg
+        showError(result_message)
         console.log(response.data.msg)
       }
 
@@ -106,6 +120,12 @@ const RegistrationFormComponent: React.FC = () => {
                   <button type="submit">Change Password</button>
                 </div>
               </div>
+
+              {errorMessage && (
+                <div className="error-modal justify-center">
+                  <h3>{errorMessage}</h3>
+                </div>
+              )}
 
             </div>
           </Form>

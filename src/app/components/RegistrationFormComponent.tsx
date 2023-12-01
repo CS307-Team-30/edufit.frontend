@@ -63,6 +63,8 @@ const RegistrationFormComponent: React.FC = () => {
       const responseToken: string = response.data.token
       const decodedToken: User = jwtDecode(responseToken)
 
+      console.log(responseToken)
+
       updateUser({ ...user, ...decodedToken, authenticationToken: responseToken })
 
       const profile = await axios.get("http://localhost:8000/get-profile/" + decodedToken.id)

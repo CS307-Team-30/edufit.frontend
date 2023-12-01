@@ -1,6 +1,7 @@
 import UserProfile from '@/app/components/UserProfile';
 import ComponentsLayout from '@/app/components/layout';
 import ImageUpload from '@/app/components/FileUpload';
+import hydrate from 'react-dom';
 
 import '../src/styles/colors.css';
 import '../src/styles/globals.css';
@@ -18,8 +19,8 @@ export default function Profile() {
   const profile_pic = profile.profile_pic;
 
   return (
-    <ComponentsLayout>
-      <div className='mt-12 min-h-[500px] bg-white px-12 pt-20 md:mx-40'>
+    <ComponentsLayout >
+      <div className='mt-12 min-h-[500px] bg-white px-12 pt-20 md:mx-40' >
         <UserProfile nickname={nickname} bio={bio} profile_pic={profile_pic} />
       </div>
       <div className='mt-12 min-h-[500px] bg-white px-12 pt-20 md:mx-40'>
