@@ -33,11 +33,11 @@ function UserProfile(data: UserProfileData) {
   return (
     <div className="user-profile flex items-center justify-center flex-col space-y-4">
       <div className="profile-picture rounded-full w-64 h-64 overflow-hidden border-4 border-white">
-      <img
-        className="w-full h-full object-cover"
-        src="/images/mh-3-23-coleman-1648059910.png"
-        alt={`${nickname}'s profile`}
-      />
+        <img
+          className="w-full h-full object-cover"
+          src={imageURL}
+          alt={`${nickname}'s profile`}
+        />
 
       </div>
       <div className="user-info text-center">

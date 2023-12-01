@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 
 import { useGlobalStore } from '@/app/stores/UserStore';
@@ -45,6 +45,16 @@ const UserDeleter: React.FC = () => {
   const updateUser = useGlobalStore((state) => state.updateUser)
   const updateProfile = useGlobalStore((state) => state.updateProfile)
 
+  // State to control the visibility of the error message
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  // Function to show the error message
+  const showError = (message) => {
+    setErrorMessage(message);
+  };
+
+  var result_message = "Confirm your password before changing it."
+
   const handleSubmit = async (values: FormValues) => {
     // console.log(values)
     try {
@@ -57,8 +67,8 @@ const UserDeleter: React.FC = () => {
         updateProfile(initialProfileState)
         router.push('/login');
       } else {
-        // Handle errors here
-        console.log(response.data.error)
+        result_message = response.data.error
+        showError("Error: " + result_message)
       }
 
     } catch (error) {
@@ -95,6 +105,12 @@ const UserDeleter: React.FC = () => {
                   <button type="submit">Submit</button>
                 </div>
               </div>
+
+              {errorMessage && (
+                <div className="error-modal justify-center">
+                  <h3>{errorMessage}</h3>
+                </div>
+              )}
 
             </div>
           </Form>
