@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 
 import { useGlobalStore } from '@/app/stores/UserStore';
@@ -47,6 +47,16 @@ const FormComponent: React.FC = () => {
   const updateProfile = useGlobalStore((state) => state.updateProfile)
   const router = useRouter();
 
+  var result_message = "Confirm your password before changing it."
+
+  // State to control the visibility of the error message
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  // Function to show the error message
+  const showError = (message) => {
+    setErrorMessage(message);
+  };
+
   const handleSubmit = async (values: FormValues) => {
     // console.log(values)
     try {
@@ -74,6 +84,8 @@ const FormComponent: React.FC = () => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error('Authentication failed:', error.response?.data);
+        result_message = error.response?.data.error
+        showError(result_message)
       } else {
         console.error('An unexpected error occurred:', error);
       }
@@ -119,6 +131,13 @@ const FormComponent: React.FC = () => {
                   <Link href="/register">Register</Link>
                 </div>
               </div>
+
+              {errorMessage && (
+                <div className="error-modal justify-center">
+                  <h3>{errorMessage}</h3>
+                </div>
+              )}
+
             </div>
           </Form>
         </Formik>
