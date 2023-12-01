@@ -1,70 +1,51 @@
 import axios from 'axios';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { jwtDecode } from 'jwt-decode'
-import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
-import * as Yup from 'yup';
+import React, { useState } from 'react';
 
 import { useGlobalStore } from '@/app/stores/UserStore';
 
-import { User } from '@/types/User';
-
-// Define the validation schema using Yup
-const validationSchema = Yup.object({
-  password: Yup.string().min(4, 'Password must be at least 4 characters').required('Password is required'),
-  confirmation: Yup.string().min(4, 'Password must be at least 4 characters').required('Password is required')
-});
-
-
-interface FormValues {
-  password: string;
-  confirmation: string;
-}
-
-
-type ErrorMessageComponentProps = {
-  children?: React.ReactNode
-}
-
-
-const ErrorMessageComponent = ({ children }: ErrorMessageComponentProps) => {
-  return (
-    <div className="absolute font-primary text-sm text-red-600 -translate-y-5">
-      {children}
-    </div>
-  )
-}
-
 const RegistrationFormComponent: React.FC = () => {
-  const initialValues: FormValues = {
-    password: '',
-    confirmation: '',
-  };
+  const [password, setPassword] = useState('');
+  const [confirmation, setConfirmation] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmationError, setConfirmationError] = useState('');
 
-  const router = useRouter()
-  const user = useGlobalStore((state) => state.user)
-  const authtoken = useGlobalStore(state => state.user.authenticationToken)
+  const router = useRouter();
+  const authtoken = useGlobalStore((state) => state.user.authenticationToken);
 
-  const handleSubmit = async (values: FormValues) => {
-    // console.log(values)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Reset error messages
+    setPasswordError('');
+    setConfirmationError('');
+
     try {
-      const response = await axios.post('http://localhost:8000/change-password',
-        {
-          authToken: authtoken,
-          password: values.password,
-          confirmation: values.confirmation
-        });
-
-      if (response.data.error) {
-        console.log("Error: " + response.data.error)
-      } else if (response.data.msg) {
-        console.log(response.data.msg)
+      if (password.length < 4) {
+        setPasswordError('Password must be at least 4 characters long');
+        return;
       }
 
+      if (password !== confirmation) {
+        setConfirmationError('Passwords do not match');
+        return;
+      }
+
+      const response = await axios.post('http://localhost:8000/change-password', {
+        authToken: authtoken,
+        password,
+        confirmation,
+      });
+
+      if (response.data.error) {
+        console.log(response.data.error);
+      } else if (response.data.msg) {
+        router.push('/homepage');
+        console.log(response.data.msg);
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error('Registration failed:', error.response?.data);
+        console.error('Change password failed:', error.response?.data);
       } else {
         console.error('An unexpected error occurred:', error);
       }
@@ -72,54 +53,63 @@ const RegistrationFormComponent: React.FC = () => {
   };
 
   return (
-    <div className="mx-40 text-black font-bebas flex items-center justify-center h-screen">
-      <div className='bg-amber-300'>
-
-      </div>
-      <div className="text-2xl flex flex-col pr-20 pl-20 my-20">
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          <Form>
-            <div className='text-3xl  grid grid-rows-4 gap-12'>
-
-              <div className='grid grid-cols-2'>
-                <label htmlFor="password">New Password:</label>
-                <div className='relative font-primary'>
-                  <ErrorMessage name="password" component={ErrorMessageComponent} />
-                  <Field type="password" id="password" name="password" />
-                </div>
-              </div>
-
-              <div className='grid grid-cols-2'>
-                <label htmlFor="password">Confirm:</label>
-                <div className='relative font-primary'>
-                  <ErrorMessage name="confirmation" component={ErrorMessageComponent} />
-                  <Field type="password" id="confirmation" name="confirmation" />
-                </div>
-              </div>
-
-              <div className='flex justify-center space-x-8'>
-                <div className='border rounded-lg  bg-pink-300 hover:scale-105 transform duration-200 text-white px-6 py-2'>
-                  <button type="submit">Change Password</button>
-                </div>
-              </div>
-
+    <section>
+      <div className="flex flex-col items-center justify-center px-6 mx-auto lg:py-0">
+        <div className="w-full p-6 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:bg-gray-800 dark:border-gray-700 sm:p-8">
+          <h2 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            Change Password
+          </h2>
+          <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                New Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="••••••••"
+                required
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setPasswordError('');
+                }}
+              />
+              {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
             </div>
-          </Form>
-        </Formik>
-
-
+            <div>
+              <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Confirm password
+              </label>
+              <input
+                type="password"
+                name="confirm-password"
+                id="confirm-password"
+                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="••••••••"
+                required
+                value={confirmation}
+                onChange={(e) => {
+                  setConfirmation(e.target.value);
+                  setConfirmationError('');
+                }}
+              />
+              {confirmationError && <p className="text-red-500 text-sm">{confirmationError}</p>}
+            </div>
+            <button
+              type="submit"
+              className="w-full text-white bg-pink-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              onSubmit={handleSubmit}
+            >
+              Reset Password
+            </button>
+          </form>
+        </div>
       </div>
-
-
-    </div>
-
+    </section>
   );
 };
 
-
-
-export default RegistrationFormComponent
+export default RegistrationFormComponent;
