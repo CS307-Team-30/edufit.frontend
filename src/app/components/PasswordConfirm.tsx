@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import React, { useState } from 'react';
 
 import { useGlobalStore } from '@/app/stores/UserStore';
 
@@ -110,7 +109,6 @@ const RegistrationFormComponent: React.FC = () => {
           </form>
         </div>
       </div>
-    </section>
     </section>
   );
 };
